@@ -1,0 +1,53 @@
+{
+  "validated_at": "2026-11-21T11:10:00.030040+00:00",
+  "run_id": "validation-55e6268fa03f",
+  "database": "data/runtime/stream_validation.sqlite3",
+  "os": "Windows-10-10.0.19045-SP0",
+  "python": "3.11.15",
+  "workers": 1,
+  "tf_intra_threads": 1,
+  "tf_inter_threads": 1,
+  "omp_threads": 1,
+  "startup_seconds": 18.99216719996184,
+  "restart_seconds": 18.221494400000665,
+  "accepted_readings": 66,
+  "ready_cycle_predictions": 8,
+  "replay_seconds": 6.857559900032356,
+  "observations_per_second_including_warmup": 9.624414655085781,
+  "end_to_end_ready_cycles_per_second_including_warmup": 1.1665957157679736,
+  "parity": [
+    {
+      "unit_id": 1,
+      "cycle": 31,
+      "rul_cycles": 115.67457020282745,
+      "anomaly_score": 0.42426395416259766,
+      "survival_cycle": 30,
+      "parity_passed": true
+    },
+    {
+      "unit_id": 55,
+      "cycle": 35,
+      "rul_cycles": 122.84911423921585,
+      "anomaly_score": 0.40798930525779725,
+      "survival_cycle": 30,
+      "parity_passed": true
+    }
+  ],
+  "feed_latency_ms": {
+    "p50": 10.107299982337281,
+    "p95": 13.012129993876442,
+    "p99": 13.40018602903001
+  },
+  "feed_triggered_inference": false,
+  "duplicate_deliveries": 66,
+  "api_restart_preserved_results": true,
+  "final_jobs": {
+    "pending": 0,
+    "processing": 0,
+    "done": 66,
+    "failed": 0
+  },
+  "alert_episodes": 0,
+  "external_notifications_sent": 0,
+  "limits": "Short two-engine native HTTP smoke test, not a production throughput or hardware-stream validation."
+}

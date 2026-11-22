@@ -1,0 +1,5 @@
+{
+  "description": "Native Isolation Forest 2% training-contamination threshold, raw cycle scores",
+  "cycle_f1_rul30": 0.3927710843373494,
+  "healthy_cycle_fpr": 0.02753195673549656
+}

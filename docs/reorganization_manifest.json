@@ -1,0 +1,232 @@
+{
+  "date": "2026-11-16",
+  "moves": [
+    {
+      "source": "Stats.ipynb",
+      "target": "notebooks/01_exploratory_analysis.ipynb"
+    },
+    {
+      "source": "data_preprossecing.ipynb",
+      "target": "notebooks/02_data_preprocessing.ipynb"
+    },
+    {
+      "source": "ML_model_training.ipynb",
+      "target": "notebooks/03_ml_baselines.ipynb"
+    },
+    {
+      "source": "DL_model_training.ipynb",
+      "target": "notebooks/04_lstm_training.ipynb"
+    },
+    {
+      "source": "Survival_model_training.ipynb",
+      "target": "notebooks/05_survival_analysis.ipynb"
+    },
+    {
+      "source": "dataset/archive/CMaps/readme.txt",
+      "target": "references/cmapss_readme.txt"
+    },
+    {
+      "source": "dataset/archive/CMaps/RUL_FD001.txt",
+      "target": "data/raw/cmapss/RUL_FD001.txt"
+    },
+    {
+      "source": "dataset/archive/CMaps/RUL_FD002.txt",
+      "target": "data/raw/cmapss/RUL_FD002.txt"
+    },
+    {
+      "source": "dataset/archive/CMaps/RUL_FD003.txt",
+      "target": "data/raw/cmapss/RUL_FD003.txt"
+    },
+    {
+      "source": "dataset/archive/CMaps/RUL_FD004.txt",
+      "target": "data/raw/cmapss/RUL_FD004.txt"
+    },
+    {
+      "source": "dataset/archive/CMaps/test_FD001.txt",
+      "target": "data/raw/cmapss/test_FD001.txt"
+    },
+    {
+      "source": "dataset/archive/CMaps/test_FD002.txt",
+      "target": "data/raw/cmapss/test_FD002.txt"
+    },
+    {
+      "source": "dataset/archive/CMaps/test_FD003.txt",
+      "target": "data/raw/cmapss/test_FD003.txt"
+    },
+    {
+      "source": "dataset/archive/CMaps/test_FD004.txt",
+      "target": "data/raw/cmapss/test_FD004.txt"
+    },
+    {
+      "source": "dataset/archive/CMaps/train_FD001.txt",
+      "target": "data/raw/cmapss/train_FD001.txt"
+    },
+    {
+      "source": "dataset/archive/CMaps/train_FD002.txt",
+      "target": "data/raw/cmapss/train_FD002.txt"
+    },
+    {
+      "source": "dataset/archive/CMaps/train_FD003.txt",
+      "target": "data/raw/cmapss/train_FD003.txt"
+    },
+    {
+      "source": "dataset/archive/CMaps/train_FD004.txt",
+      "target": "data/raw/cmapss/train_FD004.txt"
+    },
+    {
+      "source": "dataset/archive/CMaps/x.txt",
+      "target": "archive/unidentified/x.txt"
+    },
+    {
+      "source": "dataset/archive/CMaps/Damage Propagation Modeling.pdf",
+      "target": "references/cmapss_damage_propagation.pdf"
+    },
+    {
+      "source": "dataset/DataSet _explanning.docx",
+      "target": "references/dataset_notes.docx"
+    },
+    {
+      "source": "processed data/lstm_fd001",
+      "target": "data/processed/lstm_fd001"
+    },
+    {
+      "source": "processed data/df_clean_FD001.csv",
+      "target": "data/processed/ml_baselines/df_clean_FD001.csv"
+    },
+    {
+      "source": "saved_models/lstm_fd001_v2",
+      "target": "models/lstm_fd001_v2"
+    },
+    {
+      "source": "saved_models/cox_fd001",
+      "target": "models/cox_fd001"
+    },
+    {
+      "source": "outputs/survival_fd001/conditional_survival.csv",
+      "target": "reports/tables/survival_fd001/conditional_survival.csv"
+    },
+    {
+      "source": "outputs/survival_fd001/conditional_survival.png",
+      "target": "reports/figures/survival_fd001/conditional_survival.png"
+    },
+    {
+      "source": "outputs/survival_fd001/failure_probabilities.csv",
+      "target": "reports/tables/survival_fd001/failure_probabilities.csv"
+    },
+    {
+      "source": "outputs/survival_fd001/hazard_ratios.csv",
+      "target": "reports/tables/survival_fd001/hazard_ratios.csv"
+    },
+    {
+      "source": "outputs/survival_fd001/hazard_ratios.png",
+      "target": "reports/figures/survival_fd001/hazard_ratios.png"
+    },
+    {
+      "source": "outputs/survival_fd001/penalizer_trials.csv",
+      "target": "reports/tables/survival_fd001/penalizer_trials.csv"
+    },
+    {
+      "source": "outputs/survival_fd001/proportional_hazards_test.csv",
+      "target": "reports/tables/survival_fd001/proportional_hazards_test.csv"
+    },
+    {
+      "source": "outputs/survival_fd001/survival_from_cycle30.csv",
+      "target": "reports/tables/survival_fd001/survival_from_cycle30.csv"
+    },
+    {
+      "source": "outputs/survival_fd001/test_censored_survival_table.csv",
+      "target": "data/processed/survival_fd001/test_censored_survival_table.csv"
+    },
+    {
+      "source": "outputs/survival_fd001/test_evaluation.csv",
+      "target": "reports/tables/survival_fd001/test_evaluation.csv"
+    },
+    {
+      "source": "outputs/survival_fd001/train_survival_table.csv",
+      "target": "data/processed/survival_fd001/train_survival_table.csv"
+    },
+    {
+      "source": "outputs/survival_fd001/validation_survival_table.csv",
+      "target": "data/processed/survival_fd001/validation_survival_table.csv"
+    },
+    {
+      "source": "FastApi App.py",
+      "target": "archive/deployment_drafts/app.py"
+    },
+    {
+      "source": "dockerConf.docker",
+      "target": "archive/deployment_drafts/Dockerfile"
+    },
+    {
+      "source": "Instaructions.md",
+      "target": "archive/deployment_drafts/original_instructions.md"
+    },
+    {
+      "source": "Dependencies.txt",
+      "target": "requirements.txt"
+    }
+  ],
+  "removals": [
+    {
+      "path": "final_fixed_model.keras",
+      "reason": "Checkpoint from the superseded pre-correction LSTM pipeline.",
+      "bytes": 1546846,
+      "sha256": "ebfed4ff7f2c4ece20b3b2fbd1ec9aba2dc946bdfde571927b7c336f5fb75ea1"
+    },
+    {
+      "path": "saved_models/nasa_rul_lstm_v1.keras",
+      "reason": "Superseded by the corrected lstm_fd001_v2 model and its matching scaler.",
+      "bytes": 1546846,
+      "sha256": "13cac5410c0cebc4d2a8c0fe1033e627b9dbbf8775323ad789b1cd70b6cf3813"
+    },
+    {
+      "path": "saved_models/nasa_scaler.pkl",
+      "reason": "Scaler for the superseded v1 model.",
+      "bytes": 1535,
+      "sha256": "49ab68cd7a8f3769d003377c5baa4635ad43e4456b7e995eee77da66ddeeda45"
+    },
+    {
+      "path": "processed data/X_train_FD001.npy",
+      "reason": "Old sequence inputs replaced by engine-separated corrected arrays.",
+      "bytes": 55008848,
+      "sha256": "3d11929b82e39791aefe70fcea99e91bd15057e03c6c0b3bc46f20acb0c06e38"
+    },
+    {
+      "path": "processed data/y_train_FD001.npy",
+      "reason": "Old one-cycle-shifted labels replaced by corrected arrays.",
+      "bytes": 141176,
+      "sha256": "035fd93e76b3ccb85b2fba0063085a29d5773f399f26bc36fe4a1ac2fbc2fed5"
+    },
+    {
+      "path": "outputs/output1.png",
+      "reason": "Old SHAP plot superseded by the latest LSTM notebook outputs.",
+      "bytes": 41427,
+      "sha256": "0a246d1ed99d1aa8fa780f279998b7fbc33c5c03b9eac1cf9f0672828df4b13d"
+    },
+    {
+      "path": "outputs/output2.png",
+      "reason": "Old SHAP plot superseded by the latest LSTM notebook outputs.",
+      "bytes": 50708,
+      "sha256": "c0fc5e438f2b80fc44b1ad1aef85287708bf409af07df4cf5884e71aa3752998"
+    },
+    {
+      "path": "outputs/output3.png",
+      "reason": "Old SHAP plot superseded by the latest LSTM notebook outputs.",
+      "bytes": 36473,
+      "sha256": "71a4f28b0034c739d1c6b3fb3caf036c2d95f92d6a2c84af014d2b1e8b84fa91"
+    },
+    {
+      "path": "backups/before_lstm_data_fix_20261116_150340/data_preprossecing.ipynb",
+      "reason": "Preserved inside archive/pre_reorganization_sources.zip; loose duplicate removed.",
+      "bytes": 4153628,
+      "sha256": "cb25f9918bfef5aee23ac2bdd245152dd08fea4fb1ddf75f139363766fa2f6fd"
+    },
+    {
+      "path": "backups/before_lstm_data_fix_20261116_150340/DL_model_training.ipynb",
+      "reason": "Preserved inside archive/pre_reorganization_sources.zip; loose duplicate removed.",
+      "bytes": 534836,
+      "sha256": "f3492e6b3513180e68f44d6e9a681777334836aa75f4e84d44e018bdaab1e895"
+    }
+  ],
+  "source_backup": "archive/pre_reorganization_sources.zip"
+}

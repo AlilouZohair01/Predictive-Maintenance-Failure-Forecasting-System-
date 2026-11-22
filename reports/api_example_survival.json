@@ -1,0 +1,425 @@
+{
+  "unit_id": 55,
+  "dataset": "FD001",
+  "cycle": 113,
+  "model_version": "cox_fd001:e7ba90c3d201",
+  "release_version": "270491b9619aa4a6",
+  "request_id": "e83cc383-9893-4797-a752-2ddf812e2658",
+  "inference_duration_ms": 7.389800040982664,
+  "requested_horizon_cycles": 100,
+  "evaluated_horizon_cycles": 100,
+  "horizon_truncated": false,
+  "failure_probability_at_requested_horizon": 0.6790457105896037,
+  "median_remaining_cycles": 87,
+  "median_unavailable_reason": null,
+  "curve": [
+    {
+      "future_cycles": 0,
+      "survival_probability": 1.0
+    },
+    {
+      "future_cycles": 1,
+      "survival_probability": 1.0
+    },
+    {
+      "future_cycles": 2,
+      "survival_probability": 1.0
+    },
+    {
+      "future_cycles": 3,
+      "survival_probability": 1.0
+    },
+    {
+      "future_cycles": 4,
+      "survival_probability": 1.0
+    },
+    {
+      "future_cycles": 5,
+      "survival_probability": 1.0
+    },
+    {
+      "future_cycles": 6,
+      "survival_probability": 1.0
+    },
+    {
+      "future_cycles": 7,
+      "survival_probability": 1.0
+    },
+    {
+      "future_cycles": 8,
+      "survival_probability": 1.0
+    },
+    {
+      "future_cycles": 9,
+      "survival_probability": 1.0
+    },
+    {
+      "future_cycles": 10,
+      "survival_probability": 1.0
+    },
+    {
+      "future_cycles": 11,
+      "survival_probability": 1.0
+    },
+    {
+      "future_cycles": 12,
+      "survival_probability": 1.0
+    },
+    {
+      "future_cycles": 13,
+      "survival_probability": 1.0
+    },
+    {
+      "future_cycles": 14,
+      "survival_probability": 1.0
+    },
+    {
+      "future_cycles": 15,
+      "survival_probability": 0.9879974141024033
+    },
+    {
+      "future_cycles": 16,
+      "survival_probability": 0.9879974141024033
+    },
+    {
+      "future_cycles": 17,
+      "survival_probability": 0.9879974141024033
+    },
+    {
+      "future_cycles": 18,
+      "survival_probability": 0.9879974141024033
+    },
+    {
+      "future_cycles": 19,
+      "survival_probability": 0.9879974141024033
+    },
+    {
+      "future_cycles": 20,
+      "survival_probability": 0.9879974141024033
+    },
+    {
+      "future_cycles": 21,
+      "survival_probability": 0.9879974141024033
+    },
+    {
+      "future_cycles": 22,
+      "survival_probability": 0.9879974141024033
+    },
+    {
+      "future_cycles": 23,
+      "survival_probability": 0.9879974141024033
+    },
+    {
+      "future_cycles": 24,
+      "survival_probability": 0.9640952408287586
+    },
+    {
+      "future_cycles": 25,
+      "survival_probability": 0.9640952408287586
+    },
+    {
+      "future_cycles": 26,
+      "survival_probability": 0.9640952408287586
+    },
+    {
+      "future_cycles": 27,
+      "survival_probability": 0.9640952408287586
+    },
+    {
+      "future_cycles": 28,
+      "survival_probability": 0.9640952408287586
+    },
+    {
+      "future_cycles": 29,
+      "survival_probability": 0.9640952408287586
+    },
+    {
+      "future_cycles": 30,
+      "survival_probability": 0.9640952408287586
+    },
+    {
+      "future_cycles": 31,
+      "survival_probability": 0.9640952408287586
+    },
+    {
+      "future_cycles": 32,
+      "survival_probability": 0.9640952408287586
+    },
+    {
+      "future_cycles": 33,
+      "survival_probability": 0.9640952408287586
+    },
+    {
+      "future_cycles": 34,
+      "survival_probability": 0.9401612223698589
+    },
+    {
+      "future_cycles": 35,
+      "survival_probability": 0.9401612223698589
+    },
+    {
+      "future_cycles": 36,
+      "survival_probability": 0.9401612223698589
+    },
+    {
+      "future_cycles": 37,
+      "survival_probability": 0.9281128982872109
+    },
+    {
+      "future_cycles": 38,
+      "survival_probability": 0.9281128982872109
+    },
+    {
+      "future_cycles": 39,
+      "survival_probability": 0.9281128982872109
+    },
+    {
+      "future_cycles": 40,
+      "survival_probability": 0.9160372397440053
+    },
+    {
+      "future_cycles": 41,
+      "survival_probability": 0.9039701132997551
+    },
+    {
+      "future_cycles": 42,
+      "survival_probability": 0.8919093248382295
+    },
+    {
+      "future_cycles": 43,
+      "survival_probability": 0.8679599766016026
+    },
+    {
+      "future_cycles": 44,
+      "survival_probability": 0.8679599766016026
+    },
+    {
+      "future_cycles": 45,
+      "survival_probability": 0.8558987580205183
+    },
+    {
+      "future_cycles": 46,
+      "survival_probability": 0.8558987580205183
+    },
+    {
+      "future_cycles": 47,
+      "survival_probability": 0.8558987580205183
+    },
+    {
+      "future_cycles": 48,
+      "survival_probability": 0.8558987580205183
+    },
+    {
+      "future_cycles": 49,
+      "survival_probability": 0.8558987580205183
+    },
+    {
+      "future_cycles": 50,
+      "survival_probability": 0.8438189169782154
+    },
+    {
+      "future_cycles": 51,
+      "survival_probability": 0.8438189169782154
+    },
+    {
+      "future_cycles": 52,
+      "survival_probability": 0.8317289086604126
+    },
+    {
+      "future_cycles": 53,
+      "survival_probability": 0.8317289086604126
+    },
+    {
+      "future_cycles": 54,
+      "survival_probability": 0.8317289086604126
+    },
+    {
+      "future_cycles": 55,
+      "survival_probability": 0.8317289086604126
+    },
+    {
+      "future_cycles": 56,
+      "survival_probability": 0.8317289086604126
+    },
+    {
+      "future_cycles": 57,
+      "survival_probability": 0.807755696649569
+    },
+    {
+      "future_cycles": 58,
+      "survival_probability": 0.807755696649569
+    },
+    {
+      "future_cycles": 59,
+      "survival_probability": 0.7956390072372789
+    },
+    {
+      "future_cycles": 60,
+      "survival_probability": 0.7956390072372789
+    },
+    {
+      "future_cycles": 61,
+      "survival_probability": 0.7835054237058995
+    },
+    {
+      "future_cycles": 62,
+      "survival_probability": 0.7835054237058995
+    },
+    {
+      "future_cycles": 63,
+      "survival_probability": 0.7835054237058995
+    },
+    {
+      "future_cycles": 64,
+      "survival_probability": 0.7835054237058995
+    },
+    {
+      "future_cycles": 65,
+      "survival_probability": 0.7713563908724387
+    },
+    {
+      "future_cycles": 66,
+      "survival_probability": 0.7591932595519786
+    },
+    {
+      "future_cycles": 67,
+      "survival_probability": 0.7350739422426507
+    },
+    {
+      "future_cycles": 68,
+      "survival_probability": 0.7228524177927144
+    },
+    {
+      "future_cycles": 69,
+      "survival_probability": 0.7228524177927144
+    },
+    {
+      "future_cycles": 70,
+      "survival_probability": 0.7228524177927144
+    },
+    {
+      "future_cycles": 71,
+      "survival_probability": 0.7228524177927144
+    },
+    {
+      "future_cycles": 72,
+      "survival_probability": 0.6867787370344185
+    },
+    {
+      "future_cycles": 73,
+      "survival_probability": 0.6867787370344185
+    },
+    {
+      "future_cycles": 74,
+      "survival_probability": 0.6867787370344185
+    },
+    {
+      "future_cycles": 75,
+      "survival_probability": 0.6624940143293797
+    },
+    {
+      "future_cycles": 76,
+      "survival_probability": 0.6501873461311042
+    },
+    {
+      "future_cycles": 77,
+      "survival_probability": 0.6501873461311042
+    },
+    {
+      "future_cycles": 78,
+      "survival_probability": 0.6501873461311042
+    },
+    {
+      "future_cycles": 79,
+      "survival_probability": 0.6378690501294347
+    },
+    {
+      "future_cycles": 80,
+      "survival_probability": 0.625558309279624
+    },
+    {
+      "future_cycles": 81,
+      "survival_probability": 0.6011352812803724
+    },
+    {
+      "future_cycles": 82,
+      "survival_probability": 0.5648449457449187
+    },
+    {
+      "future_cycles": 83,
+      "survival_probability": 0.5524637663744626
+    },
+    {
+      "future_cycles": 84,
+      "survival_probability": 0.5524637663744626
+    },
+    {
+      "future_cycles": 85,
+      "survival_probability": 0.5400794451992221
+    },
+    {
+      "future_cycles": 86,
+      "survival_probability": 0.5037456536961996
+    },
+    {
+      "future_cycles": 87,
+      "survival_probability": 0.4791250971592887
+    },
+    {
+      "future_cycles": 88,
+      "survival_probability": 0.4666651563794285
+    },
+    {
+      "future_cycles": 89,
+      "survival_probability": 0.4303587844552103
+    },
+    {
+      "future_cycles": 90,
+      "survival_probability": 0.4303587844552103
+    },
+    {
+      "future_cycles": 91,
+      "survival_probability": 0.4303587844552103
+    },
+    {
+      "future_cycles": 92,
+      "survival_probability": 0.4303587844552103
+    },
+    {
+      "future_cycles": 93,
+      "survival_probability": 0.4303587844552103
+    },
+    {
+      "future_cycles": 94,
+      "survival_probability": 0.40552826718656754
+    },
+    {
+      "future_cycles": 95,
+      "survival_probability": 0.40552826718656754
+    },
+    {
+      "future_cycles": 96,
+      "survival_probability": 0.3929737172859
+    },
+    {
+      "future_cycles": 97,
+      "survival_probability": 0.3803434468029054
+    },
+    {
+      "future_cycles": 98,
+      "survival_probability": 0.3803434468029054
+    },
+    {
+      "future_cycles": 99,
+      "survival_probability": 0.3803434468029054
+    },
+    {
+      "future_cycles": 100,
+      "survival_probability": 0.3209542894103962
+    }
+  ],
+  "limitations": [
+    "Experimental Cox model: test concordance index 0.576.",
+    "Covariates are frozen means of cycles 1\u201330; later sensor changes are not used."
+  ]
+}

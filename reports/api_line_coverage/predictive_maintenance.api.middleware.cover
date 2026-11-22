@@ -1,0 +1,143 @@
+    1: """Bound bodies before JSON parsing, preserve IDs, emit bounded metrics and logs."""
+    1: from collections import Counter, defaultdict
+    1: import asyncio
+    1: from fnmatch import fnmatchcase
+    1: import json
+    1: import logging
+    1: import re
+    1: import time
+    1: import uuid
+       
+    1: from .errors import error_response
+       
+    1: LOG = logging.getLogger("predictive_maintenance.api")
+    1: BUCKETS = (0.01, 0.05, 0.1, 0.5, 1, 5, 30, 120, float("inf"))
+       
+       
+    2: class Metrics:
+    1:     def __init__(self):
+   14:         self.counts = Counter()
+   14:         self.duration = defaultdict(float)
+   14:         self.buckets = Counter()
+   14:         self.inference_seconds = Counter()
+   14:         self.inference_count = Counter()
+   14:         self.anomaly_flags = Counter()
+       
+    1:     def observe(self, route, method, status, duration):
+               # No arbitrary URL, ID or caller method becomes a metric label.
+   54:         method = method if method in {"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD"} else "OTHER"
+   54:         self.counts[(route, method, status)] += 1
+   54:         self.duration[(route, method)] += duration
+  540:         for bound in BUCKETS:
+  486:             if duration <= bound:
+  418:                 self.buckets[(route, method, bound)] += 1
+       
+    1:     def render(self, active):
+    3:         lines = ["# TYPE pm_http_requests_total counter"]
+   17:         for (route, method, status), count in sorted(self.counts.items()):
+   14:             lines.append(f'pm_http_requests_total{{route="{route}",method="{method}",status="{status}"}} {count}')
+    3:         lines.append("# TYPE pm_http_duration_seconds histogram")
+   16:         for (route, method), total in sorted(self.duration.items()):
+   13:             labels = f'route="{route}",method="{method}"'
+   90:             count = sum(c for (r, m, _), c in self.counts.items() if (r, m) == (route, method))
+   13:             lines += [f"pm_http_duration_seconds_sum{{{labels}}} {total}", f"pm_http_duration_seconds_count{{{labels}}} {count}"]
+  130:             for bound in BUCKETS:
+  117:                 label = "+Inf" if bound == float("inf") else str(bound)
+  117:                 lines.append(f'pm_http_duration_seconds_bucket{{{labels},le="{label}"}} {self.buckets[(route, method, bound)]}')
+    9:         for kind, count in active.items():
+    6:             lines.append(f'pm_active_jobs{{kind="{kind}"}} {count}')
+    4:         for kind, total in self.inference_seconds.items():
+    1:             lines.append(f'pm_inference_seconds_sum{{kind="{kind}"}} {total}')
+    1:             lines.append(f'pm_inference_seconds_count{{kind="{kind}"}} {self.inference_count[kind]}')
+    3:         for state, count in self.anomaly_flags.items():
+>>>>>>             lines.append(f'pm_anomaly_latest_total{{state="{state}"}} {count}')
+    3:         return "\n".join(lines) + "\n"
+       
+       
+    2: class BoundaryMiddleware:
+    1:     def __init__(self, app, settings, metrics):
+   12:         self.app, self.settings, self.metrics = app, settings, metrics
+       
+    1:     async def __call__(self, scope, receive, send):
+   64:         if scope["type"] != "http":
+   10:             await self.app(scope, receive, send)
+    9:             return
+   54:         start = time.perf_counter()
+  438:         headers = {k.lower(): v for k, v in scope["headers"]}
+   54:         supplied = headers.get(b"x-request-id", b"").decode("ascii", errors="ignore")
+   54:         request_id = supplied if re.fullmatch(r"[A-Za-z0-9._-]{1,64}", supplied) else str(uuid.uuid4())
+   54:         state = scope.setdefault("state", {})
+   54:         state["request_id"] = request_id
+   54:         status = 500
+   54:         started = False
+       
+   54:         async def wrapped_send(message):
+                   nonlocal status, started
+  108:             if message["type"] == "http.response.start":
+   54:                 status, started = message["status"], True
+  239:                 message["headers"] = [(k, v) for k, v in message["headers"] if k.lower() != b"x-request-id"] + [(b"x-request-id", request_id.encode())]
+  108:             await send(message)
+       
+   54:         async def reject(status_code, code, message):
+    8:             state["error_code"] = code
+    8:             await error_response(request_id, status_code, code, message)(scope, receive, wrapped_send)
+       
+   54:         try:
+   54:             host = headers.get(b"host", b"").decode("ascii", errors="ignore").split(":")[0].lower()
+  213:             if not any(fnmatchcase(host, allowed.lower()) for allowed in self.settings.allowed_hosts):
+    1:                 await reject(400, "INVALID_HOST", "Host is not allowed.")
+    1:                 return
+   53:             length = headers.get(b"content-length")
+   53:             if length is not None:
+   29:                 try:
+   29:                     declared = int(length)
+   28:                     if declared < 0:
+>>>>>>                         raise ValueError()
+    1:                 except ValueError:
+    1:                     await reject(400, "INVALID_CONTENT_LENGTH", "Invalid content length.")
+    1:                     return
+   28:                 if declared > self.settings.max_body_bytes:
+    1:                     await reject(413, "BODY_TOO_LARGE", "Request body exceeds the configured limit.")
+    1:                     return
+   51:             chunks, size = [], 0
+   52:             while True:
+   52:                 remaining = self.settings.body_timeout_seconds - (time.perf_counter() - start)
+   52:                 try:
+   52:                     message = await asyncio.wait_for(receive(), timeout=max(0, remaining))
+    1:                 except TimeoutError:
+    1:                     await reject(408, "BODY_TIMEOUT", "Request body was not received within the time limit.")
+    1:                     return
+   51:                 if message["type"] == "http.disconnect":
+>>>>>>                     return
+   51:                 chunk = message.get("body", b"")
+   51:                 size += len(chunk)
+   51:                 if size > self.settings.max_body_bytes:
+    2:                     await reject(413, "BODY_TOO_LARGE", "Request body exceeds the configured limit.")
+    2:                     return
+   49:                 chunks.append(chunk)
+   49:                 if not message.get("more_body", False):
+   48:                     break
+   48:             body = b"".join(chunks)
+   48:             delivered = False
+       
+   48:             async def replay():
+                       nonlocal delivered
+   26:                 if delivered:
+>>>>>>                     return await receive()
+   26:                 delivered = True
+   26:                 return {"type": "http.request", "body": body, "more_body": False}
+       
+   48:             await self.app(scope, replay, wrapped_send)
+    2:         except Exception:
+    2:             LOG.exception("Request failed", extra={"request_id": request_id})
+    2:             if not started:
+    2:                 await reject(500, "INTERNAL_ERROR", "Inference service encountered an unexpected error.")
+                   else:
+>>>>>>                 raise
+               finally:
+   54:             duration = time.perf_counter() - start
+   54:             route = getattr(scope.get("route"), "path", "unmatched")
+   54:             self.metrics.observe(route, scope["method"], status, duration)
+  108:             LOG.info(json.dumps({"request_id": request_id, "method": scope["method"], "route": route,
+   54:                                  "status": status, "elapsed_ms": round(duration * 1000, 3),
+   54:                                  "release_version": state.get("release_version"), "error_code": state.get("error_code")}))

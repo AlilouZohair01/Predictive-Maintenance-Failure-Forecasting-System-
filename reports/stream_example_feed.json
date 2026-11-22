@@ -1,0 +1,984 @@
+{
+  "items": [
+    {
+      "run_id": "validation-55e6268fa03f",
+      "unit_id": 1,
+      "dataset": "FD001",
+      "release_version": "270491b9619aa4a6",
+      "received_cycle": 31,
+      "processed_cycle": 31,
+      "processing_lag_cycles": 0,
+      "last_received_at": "2026-11-21T11:09:36.198617+00:00",
+      "last_processed_at": "2026-11-21T11:09:36.727179+00:00",
+      "seconds_since_receipt": 23.816425323486328,
+      "is_stale": false,
+      "source_state": "closed",
+      "next_job": null,
+      "latest": {
+        "anomaly": {
+          "cycle": 31,
+          "dataset": "FD001",
+          "detector": "autoencoder",
+          "history": null,
+          "inference_duration_ms": 214.6472000167705,
+          "latest": {
+            "alert_history_ready": false,
+            "anomaly_score": 0.42426395416259766,
+            "cycle": 31,
+            "is_anomaly": false,
+            "raw_score": 0.42863863706588745,
+            "smoothing_samples": 2,
+            "status": "ready",
+            "sustained_alert": null
+          },
+          "model_version": "anomaly_fd001:caaab0d083df",
+          "release_version": "270491b9619aa4a6",
+          "request_id": "22f46cc1-7ed5-47f7-955d-74c81e75c39b",
+          "threshold": 0.5588582417964935,
+          "threshold_policy": "healthy_q98",
+          "unit_id": 1
+        },
+        "cycle": 31,
+        "dataset": "FD001",
+        "observed_at": null,
+        "prediction": {
+          "cycle": 31,
+          "dataset": "FD001",
+          "inference_duration_ms": 256.8715999950655,
+          "model_version": "lstm_fd001_v2:6675179ff5ec",
+          "release_version": "270491b9619aa4a6",
+          "request_id": "32060cad-d8fa-4bf2-8f8c-ec45285d1e71",
+          "rul_cap_cycles": 125.0,
+          "rul_cycles": 115.67457020282745,
+          "unit_id": 1,
+          "warnings": []
+        },
+        "processing_duration_ms": 510.2024000370875,
+        "received_at": "2026-11-21T11:09:36.198617+00:00",
+        "release_version": "270491b9619aa4a6",
+        "run_id": "validation-55e6268fa03f",
+        "status": "ready",
+        "survival": null,
+        "survival_status": "not_scheduled",
+        "unit_id": 1
+      },
+      "latest_survival": {
+        "curve": [
+          {
+            "future_cycles": 0,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 1,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 2,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 3,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 4,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 5,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 6,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 7,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 8,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 9,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 10,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 11,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 12,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 13,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 14,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 15,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 16,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 17,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 18,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 19,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 20,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 21,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 22,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 23,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 24,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 25,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 26,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 27,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 28,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 29,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 30,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 31,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 32,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 33,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 34,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 35,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 36,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 37,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 38,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 39,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 40,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 41,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 42,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 43,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 44,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 45,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 46,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 47,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 48,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 49,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 50,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 51,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 52,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 53,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 54,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 55,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 56,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 57,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 58,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 59,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 60,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 61,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 62,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 63,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 64,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 65,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 66,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 67,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 68,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 69,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 70,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 71,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 72,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 73,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 74,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 75,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 76,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 77,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 78,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 79,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 80,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 81,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 82,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 83,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 84,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 85,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 86,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 87,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 88,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 89,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 90,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 91,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 92,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 93,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 94,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 95,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 96,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 97,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 98,
+            "survival_probability": 0.9879733160032812
+          },
+          {
+            "future_cycles": 99,
+            "survival_probability": 0.9879733160032812
+          },
+          {
+            "future_cycles": 100,
+            "survival_probability": 0.9879733160032812
+          }
+        ],
+        "cycle": 30,
+        "dataset": "FD001",
+        "evaluated_horizon_cycles": 100,
+        "failure_probability_at_requested_horizon": 0.012026683996718801,
+        "horizon_truncated": false,
+        "inference_duration_ms": 4.901900014374405,
+        "limitations": [
+          "Experimental Cox model: test concordance index 0.576.",
+          "Covariates are frozen means of cycles 1\u201330; later sensor changes are not used."
+        ],
+        "median_remaining_cycles": null,
+        "median_unavailable_reason": "Survival does not reach 0.5 within the returned supported horizon.",
+        "model_version": "cox_fd001:e7ba90c3d201",
+        "release_version": "270491b9619aa4a6",
+        "request_id": "1e84bf52-c5d9-42eb-b576-68cedc28be2a",
+        "requested_horizon_cycles": 100,
+        "unit_id": 1
+      },
+      "active_alerts": []
+    },
+    {
+      "run_id": "validation-55e6268fa03f",
+      "unit_id": 55,
+      "dataset": "FD001",
+      "release_version": "270491b9619aa4a6",
+      "received_cycle": 35,
+      "processed_cycle": 35,
+      "processing_lag_cycles": 0,
+      "last_received_at": "2026-11-21T11:09:38.832814+00:00",
+      "last_processed_at": "2026-11-21T11:09:39.249546+00:00",
+      "seconds_since_receipt": 21.186228275299072,
+      "is_stale": false,
+      "source_state": "closed",
+      "next_job": null,
+      "latest": {
+        "anomaly": {
+          "cycle": 35,
+          "dataset": "FD001",
+          "detector": "autoencoder",
+          "history": null,
+          "inference_duration_ms": 128.89760005054995,
+          "latest": {
+            "alert_history_ready": true,
+            "anomaly_score": 0.40798930525779725,
+            "cycle": 35,
+            "is_anomaly": false,
+            "raw_score": 0.4244135022163391,
+            "smoothing_samples": 5,
+            "status": "ready",
+            "sustained_alert": false
+          },
+          "model_version": "anomaly_fd001:caaab0d083df",
+          "release_version": "270491b9619aa4a6",
+          "request_id": "79fcee20-ddd6-4e95-95c5-2b0d7a537999",
+          "threshold": 0.5588582417964935,
+          "threshold_policy": "healthy_q98",
+          "unit_id": 55
+        },
+        "cycle": 35,
+        "dataset": "FD001",
+        "observed_at": null,
+        "prediction": {
+          "cycle": 35,
+          "dataset": "FD001",
+          "inference_duration_ms": 226.06730001280084,
+          "model_version": "lstm_fd001_v2:6675179ff5ec",
+          "release_version": "270491b9619aa4a6",
+          "request_id": "e2112573-2f47-4bdc-b428-5b4ba56f5f03",
+          "rul_cap_cycles": 125.0,
+          "rul_cycles": 122.84911423921585,
+          "unit_id": 55,
+          "warnings": []
+        },
+        "processing_duration_ms": 393.98769999388605,
+        "received_at": "2026-11-21T11:09:38.832814+00:00",
+        "release_version": "270491b9619aa4a6",
+        "run_id": "validation-55e6268fa03f",
+        "status": "ready",
+        "survival": null,
+        "survival_status": "not_scheduled",
+        "unit_id": 55
+      },
+      "latest_survival": {
+        "curve": [
+          {
+            "future_cycles": 0,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 1,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 2,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 3,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 4,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 5,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 6,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 7,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 8,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 9,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 10,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 11,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 12,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 13,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 14,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 15,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 16,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 17,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 18,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 19,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 20,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 21,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 22,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 23,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 24,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 25,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 26,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 27,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 28,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 29,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 30,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 31,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 32,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 33,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 34,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 35,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 36,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 37,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 38,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 39,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 40,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 41,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 42,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 43,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 44,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 45,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 46,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 47,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 48,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 49,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 50,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 51,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 52,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 53,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 54,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 55,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 56,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 57,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 58,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 59,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 60,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 61,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 62,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 63,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 64,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 65,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 66,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 67,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 68,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 69,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 70,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 71,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 72,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 73,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 74,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 75,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 76,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 77,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 78,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 79,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 80,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 81,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 82,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 83,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 84,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 85,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 86,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 87,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 88,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 89,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 90,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 91,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 92,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 93,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 94,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 95,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 96,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 97,
+            "survival_probability": 1.0
+          },
+          {
+            "future_cycles": 98,
+            "survival_probability": 0.9879974141024033
+          },
+          {
+            "future_cycles": 99,
+            "survival_probability": 0.9879974141024033
+          },
+          {
+            "future_cycles": 100,
+            "survival_probability": 0.9879974141024033
+          }
+        ],
+        "cycle": 30,
+        "dataset": "FD001",
+        "evaluated_horizon_cycles": 100,
+        "failure_probability_at_requested_horizon": 0.01200258589759673,
+        "horizon_truncated": false,
+        "inference_duration_ms": 5.234199983533472,
+        "limitations": [
+          "Experimental Cox model: test concordance index 0.576.",
+          "Covariates are frozen means of cycles 1\u201330; later sensor changes are not used."
+        ],
+        "median_remaining_cycles": null,
+        "median_unavailable_reason": "Survival does not reach 0.5 within the returned supported horizon.",
+        "model_version": "cox_fd001:e7ba90c3d201",
+        "release_version": "270491b9619aa4a6",
+        "request_id": "e5af7201-e1cb-4b99-9a43-f26b957ead10",
+        "requested_horizon_cycles": 100,
+        "unit_id": 55
+      },
+      "active_alerts": []
+    }
+  ],
+  "next_after_unit": null,
+  "request_id": "cdd1d7f7-3343-4559-b57d-12f39fc8866b"
+}

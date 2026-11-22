@@ -1,0 +1,7 @@
+{
+  "validation_rmse_cycles": 11.845359841496373,
+  "test_rmse_cycles": 13.361126950231279,
+  "test_r2": 0.8888328499205591,
+  "epochs_completed": 33,
+  "best_epoch": 18
+}

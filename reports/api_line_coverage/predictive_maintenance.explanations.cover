@@ -1,0 +1,35 @@
+    1: """Expected-gradient attribution accounting in RUL cycles."""
+    1: import numpy as np
+    1: from .rul import scaled_window, predict_rul
+       
+       
+    1: def aggregate(values, raw, sensors, cap, base, prediction):
+    7:     if isinstance(values, list):
+    2:         if len(values) != 1:
+    1:             raise ValueError("Expected one model output")
+    1:         values = values[0]
+    6:     values = np.asarray(values)
+    6:     if values.shape == (1, 30, 13, 1):
+    2:         values = values[..., 0]
+    6:     if values.shape != (1, 30, 13) or not np.isfinite(values).all():
+    2:         raise ValueError("Unexpected SHAP shape or non-finite contributions")
+    4:     contributions = values[0].sum(axis=0) * cap
+    4:     means = np.asarray(raw).mean(axis=0)
+  116:     rows = [{"sensor": s, "contribution_cycles": float(v), "raw_window_mean": float(m)}
+   56:             for s, v, m in zip(sensors, contributions, means)]
+   56:     rows.sort(key=lambda r: abs(r["contribution_cycles"]), reverse=True)
+    4:     reconstructed = float(base + contributions.sum())
+    8:     return {"predicted_rul_cycles": prediction, "base_value_cycles": base,
+    4:             "reconstructed_rul_cycles": reconstructed, "explanation_gap_cycles": prediction - reconstructed,
+   60:             "sensor_contributions": rows, "top_positive": [r for r in rows if r["contribution_cycles"] > 0][:3],
+   60:             "top_negative": [r for r in rows if r["contribution_cycles"] < 0][:3]}
+       
+       
+    1: def explain(raw, sensors, scaler, model, explainer, base, background_version):
+    1:     prediction = predict_rul(raw, sensors, scaler, model)
+    1:     x = scaled_window(raw, sensors, scaler)
+    1:     values = explainer.shap_values(x, nsamples=500, rseed=42)
+    1:     result = aggregate(values, raw, sensors, 125.0, base, prediction["rul_cycles"])
+    2:     return {**result, "method": "shap.GradientExplainer", "sample_budget": 500, "seed": 42,
+    1:             "background_version": background_version,
+    1:             "warnings": prediction["warnings"] + ["Approximate explanation: the gap is not model prediction error."]}

@@ -1,0 +1,12 @@
+{
+  "unit_id": 55,
+  "dataset": "FD001",
+  "cycle": 113,
+  "model_version": "lstm_fd001_v2:6675179ff5ec",
+  "release_version": "270491b9619aa4a6",
+  "request_id": "98cff714-c0f3-4dcb-b30c-5afacb4ee978",
+  "inference_duration_ms": 290.0507999584079,
+  "rul_cycles": 120.25346606969833,
+  "rul_cap_cycles": 125.0,
+  "warnings": []
+}

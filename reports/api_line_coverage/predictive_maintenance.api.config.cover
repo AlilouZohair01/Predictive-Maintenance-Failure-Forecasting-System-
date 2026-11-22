@@ -1,0 +1,28 @@
+    1: from pathlib import Path
+    1: from typing import Literal
+       
+    1: from pydantic import Field, SecretStr, model_validator
+    1: from pydantic_settings import BaseSettings, SettingsConfigDict
+       
+       
+    2: class Settings(BaseSettings):
+    1:     model_config = SettingsConfigDict(env_prefix="PM_", env_file=".env", extra="ignore")
+    1:     model_root: Path = Path("models")
+    1:     app_version: str = "0.1.0"
+    1:     log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR"] = "INFO"
+    1:     allowed_hosts: list[str] = ["localhost", "127.0.0.1", "testserver"]
+    1:     cors_origins: list[str] = []
+    1:     max_body_bytes: int = Field(1_048_576, ge=1024, le=16_777_216)
+    1:     max_history_rows: int = Field(1000, ge=30, le=1000)
+    1:     inference_capacity: int = Field(2, ge=1, le=8)
+    1:     request_timeout_seconds: float = Field(120, gt=0, le=600)
+    1:     body_timeout_seconds: float = Field(15, gt=0, le=120)
+    1:     shutdown_timeout_seconds: float = Field(130, gt=0, le=900)
+    1:     auth_mode: Literal["local", "bearer"] = "local"
+    1:     api_token: SecretStr | None = None
+       
+    2:     @model_validator(mode="after")
+    2:     def require_token(self):
+   16:         if self.auth_mode == "bearer" and (self.api_token is None or len(self.api_token.get_secret_value()) < 24):
+    1:             raise ValueError("Bearer mode requires PM_API_TOKEN with at least 24 characters")
+   15:         return self

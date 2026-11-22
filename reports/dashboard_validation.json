@@ -1,0 +1,24 @@
+{
+  "validated_at": "2026-11-21T16:49:01.686702+00:00",
+  "release": "270491b9619aa4a6",
+  "unit": 55,
+  "cycle": 113,
+  "rul_cycles": 120.25346606969833,
+  "failure_probability_100": 0.6790457105896037,
+  "anomaly_score": 0.5083616733551025,
+  "sustained_alert": false,
+  "shap_gap_cycles": -0.054458548802358564,
+  "rul_checkpoints": 12,
+  "analysis_seconds": 0.48621470003854483,
+  "elapsed_seconds": 30.00235739996424,
+  "checks": [
+    "real HTTP inference",
+    "SHAP prediction parity",
+    "12-checkpoint trend",
+    "cycle-30 alert warmup",
+    "cycle-29 inference rejected",
+    "stale selection rejected",
+    "session isolation",
+    "PNG and PDF reports"
+  ]
+}

@@ -1,0 +1,179 @@
+    1: """Trusted, fingerprinted model release, loaded once during each worker's lifespan."""
+    1: import hashlib
+    1: import importlib.metadata
+    1: import json
+    1: from pathlib import Path
+    1: import threading
+       
+    1: import joblib
+    1: import numpy as np
+    1: import pandas as pd
+       
+    1: from .schemas import SENSORS
+    1: from ..anomaly import ALGORITHMS, score_cycles, apply_threshold
+    1: from ..rul import predict_rul
+    1: from ..survival import conditional_survival, LIMITATIONS
+    1: from ..explanations import explain
+       
+    1: REQUIRED_FILES = {
+           "lstm_fd001_v2/model.keras", "lstm_fd001_v2/scaler.pkl", "lstm_fd001_v2/metadata.json",
+           "lstm_fd001_v2/shap_background.npy", "lstm_fd001_v2/shap_background.json",
+           "cox_fd001/cox_bundle.pkl", "cox_fd001/metadata.json", "anomaly_fd001/detectors.pkl",
+           "anomaly_fd001/autoencoder.keras", "anomaly_fd001/metadata.json"}
+       
+       
+    1: def verify_release(root):
+   10:     root = Path(root).resolve()
+   10:     manifest = json.loads((root / "serving_manifest.json").read_text(encoding="utf-8"))
+    9:     fingerprint = dict(manifest)
+    9:     version = fingerprint.pop("release_version")
+    9:     expected = hashlib.sha256(json.dumps(fingerprint, sort_keys=True).encode()).hexdigest()[:16]
+    9:     if version != expected or manifest["schema_version"] != 1 or manifest["dataset"] != "FD001":
+    1:         raise ValueError("Invalid release manifest")
+    8:     if manifest["sensors"] != SENSORS or set(manifest["files"]) != REQUIRED_FILES:
+    2:         raise ValueError("Unexpected release feature or file contract")
+    6:     if set(manifest["capabilities"]) != {"predict", "survival", "anomaly", "explain"}:
+    1:         raise ValueError("Incomplete release capabilities")
+   45:     for name, digest in manifest["files"].items():
+   41:         path = (root / name).resolve()
+   41:         if not path.is_relative_to(root) or hashlib.sha256(path.read_bytes()).hexdigest() != digest:
+    1:             raise ValueError("Artifact fingerprint mismatch")
+   28:     for package, version in manifest["versions"].items():
+   25:         if importlib.metadata.version(package) != version:
+    1:             raise ValueError(f"Release dependency mismatch: {package}")
+    3:     return manifest
+       
+       
+    1: def check_scaler(scaler, names):
+   11:     if scaler.n_features_in_ != len(names) or list(scaler.feature_names_in_) != names:
+    2:         raise ValueError("Scaler feature order mismatch")
+       
+       
+    2: class Registry:
+    1:     def __init__(self, root):
+    4:         root = Path(root)
+    4:         self.manifest = verify_release(root)
+    3:         self.release_version = self.manifest["release_version"]
+   15:         read = lambda p: json.loads((root / p).read_text(encoding="utf-8"))
+    3:         self.lstm_meta = read("lstm_fd001_v2/metadata.json")
+    3:         self.cox_meta = read("cox_fd001/metadata.json")
+    3:         self.anomaly_meta = read("anomaly_fd001/metadata.json")
+    3:         self.background_meta = read("lstm_fd001_v2/shap_background.json")
+    3:         self.sensors = SENSORS.copy()
+    3:         self.validate_metadata()
+    3:         import tensorflow as tf
+    3:         import shap
+    3:         self.lstm = tf.keras.models.load_model(root / "lstm_fd001_v2/model.keras", compile=False)
+    3:         self.scaler = joblib.load(root / "lstm_fd001_v2/scaler.pkl")
+    3:         self.cox = joblib.load(root / "cox_fd001/cox_bundle.pkl")
+    3:         self.detectors = joblib.load(root / "anomaly_fd001/detectors.pkl")
+    3:         self.autoencoder = tf.keras.models.load_model(root / "anomaly_fd001/autoencoder.keras", compile=False)
+    3:         check_scaler(self.scaler, self.sensors)
+    3:         check_scaler(self.cox["scaler"], self.cox_meta["features"])
+    3:         check_scaler(self.detectors["scaler"], self.sensors)
+    3:         if list(self.cox["model"].params_.index) != self.cox_meta["features"]:
+>>>>>>             raise ValueError("Cox feature order mismatch")
+    3:         if self.cox["metadata"] != self.cox_meta:
+>>>>>>             raise ValueError("Cox embedded metadata mismatch")
+    3:         if tuple(self.lstm.input_shape) != (None, 30, 13) or tuple(self.lstm.output_shape) != (None, 1):
+    1:             raise ValueError("Unexpected LSTM shape")
+    2:         if tuple(self.autoencoder.input_shape) != (None, 390) or tuple(self.autoencoder.output_shape) != (None, 390):
+    1:             raise ValueError("Unexpected autoencoder shape")
+    1:         if self.detectors["forest"].n_features_in_ != 13:
+>>>>>>             raise ValueError("Unexpected forest feature count")
+    1:         base = self.cox["model"].baseline_cumulative_hazard_
+    1:         if float(base.index.max()) != self.cox_meta["maximum_supported_time_since_landmark"]:
+>>>>>>             raise ValueError("Survival support mismatch")
+    1:         self.background = np.load(root / "lstm_fd001_v2/shap_background.npy", allow_pickle=False)
+    1:         if self.background.shape != (100, 30, 13) or not np.isfinite(self.background).all():
+>>>>>>             raise ValueError("Invalid frozen background")
+    1:         self.background_version = self.manifest["files"]["lstm_fd001_v2/shap_background.npy"][:16]
+    1:         self.explainer = shap.GradientExplainer(self.lstm, self.background)
+    1:         self.explanation_lock = threading.Lock()
+    1:         self.base_cycles = float(np.asarray(self.lstm(self.background, training=False)).mean() * 125)
+               # Warm real transformations using a training-background window, not test labels.
+    1:         raw = self.scaler.inverse_transform(self.background[0])
+    1:         self.predict(raw)
+    1:         self.survival(raw, 30, 10)
+    1:         self.anomaly(raw, 1, "autoencoder", "healthy_q98", False)
+    2:         with self.explanation_lock:
+    1:             smoke = self.explainer.shap_values(self.background[:1], nsamples=2, rseed=42)
+    1:             if not np.isfinite(np.asarray(smoke)).all():
+>>>>>>                 raise ValueError("Explanation warm-up failed")
+       
+    1:     def validate_metadata(self):
+   12:         a, c, l, b = self.anomaly_meta, self.cox_meta, self.lstm_meta, self.background_meta
+   12:         if l["sensor_names"] != SENSORS or c["sensor_names"] != SENSORS or a["sensors"] != SENSORS:
+    1:             raise ValueError("Metadata sensor order mismatch")
+   11:         if l["sequence_length"] != 30 or l["max_rul"] != 125 or l["dataset"] != "FD001":
+    1:             raise ValueError("Unsupported LSTM contract")
+  136:         if c["landmark_cycle"] != 30 or c["features"] != [s + "_mean_first30" for s in SENSORS]:
+    1:             raise ValueError("Unsupported Cox contract")
+    9:         if (a["window_length"], a["smoothing"], a["consecutive"]) != (30, 5, 3):
+    1:             raise ValueError("Unsupported anomaly temporal contract")
+    8:         if a["selected_model"] != "autoencoder" or a["primary_policy"] != "healthy_q98":
+    1:             raise ValueError("Anomaly default mismatch")
+    7:         if set(a["thresholds"]) != set(ALGORITHMS):
+    1:             raise ValueError("Incomplete detector thresholds")
+   22:         for values in a["thresholds"].values():
+   17:             if set(values) != {"healthy_q98", "validation_f1"} or not np.isfinite(list(values.values())).all():
+    1:                 raise ValueError("Invalid threshold policies")
+    5:         if b["sensor_names"] != SENSORS or not b["scaled"] or b["samples"] != 100 or b["seed"] != 42:
+    1:             raise ValueError("Invalid background provenance")
+   10:         for name in ("model", "scaler"):
+    7:             filename = "model.keras" if name == "model" else "scaler.pkl"
+    7:             if b[name + "_sha256"] != self.manifest["files"]["lstm_fd001_v2/" + filename]:
+    1:                 raise ValueError("Background belongs to a different model/scaler")
+       
+    1:     def model_version(self, capability):
+   23:         prefix = {"predict": "lstm_fd001_v2", "explain": "lstm_fd001_v2", "survival": "cox_fd001", "anomaly": "anomaly_fd001"}[capability]
+  276:         files = {k: v for k, v in self.manifest["files"].items() if k.startswith(prefix + "/")}
+   23:         return prefix + ":" + hashlib.sha256(json.dumps(files, sort_keys=True).encode()).hexdigest()[:12]
+       
+    1:     def predict(self, raw):
+    2:         return predict_rul(raw, self.sensors, self.scaler, self.lstm, self.lstm_meta["max_rul"])
+       
+    1:     def survival(self, raw, current_cycle, horizon):
+    5:         return conditional_survival(raw, current_cycle, horizon, self.cox, self.cox_meta)
+       
+    1:     def anomaly(self, raw, unit_id, detector, policy, return_history):
+   15:         frame = pd.DataFrame(raw, columns=self.sensors)
+   15:         frame["unit_number"] = unit_id
+   15:         frame["time_in_cycles"] = np.arange(1, len(frame) + 1)
+   15:         meta = self.anomaly_meta
+   30:         scored = score_cycles(frame, self.sensors, self.detectors["scaler"], self.detectors["forest"],
+   15:                               self.autoencoder, meta["window_length"], meta["smoothing"])
+   15:         threshold = meta["thresholds"][detector][policy]
+   15:         flags, alerts = apply_threshold(scored, detector, threshold, meta["consecutive"])
+   15:         rows = []
+ 1043:         for i, row in scored.iterrows():
+ 1028:             cycle = i + 1
+ 1028:             ready = cycle >= 30
+ 1028:             alert_ready = cycle >= 32
+ 1028:             raw_score, score = float(row[detector + "_raw"]), float(row[detector + "_score"])
+ 1028:             if ready and not np.isfinite([raw_score, score]).all():
+>>>>>>                 raise ValueError("Invalid anomaly score")
+ 2056:             rows.append({"cycle": cycle, "raw_score": raw_score if ready else None,
+ 1028:                          "anomaly_score": score if ready else None, "is_anomaly": bool(flags[i]) if ready else None,
+ 1028:                          "sustained_alert": bool(alerts[i]) if alert_ready else None,
+ 1028:                          "status": "ready" if ready else "warmup", "alert_history_ready": alert_ready,
+ 1028:                          "smoothing_samples": min(5, max(0, cycle - 29))})
+   30:         return {"detector": detector, "threshold_policy": policy, "threshold": threshold,
+   15:                 "latest": rows[-1], "history": rows if return_history else None}
+       
+    1:     def explain(self, raw):
+    2:         with self.explanation_lock:
+    1:             return explain(raw, self.sensors, self.scaler, self.lstm, self.explainer, self.base_cycles, self.background_version)
+       
+    1:     def describe(self):
+    2:         return {"dataset": "FD001", "release_version": self.release_version,
+    6:                 "capabilities": {k: self.model_version(k) for k in self.manifest["capabilities"]},
+    1:                 "sensor_order": self.sensors, "input_units": "Raw native C-MAPSS units; see API guide sensor table.",
+    1:                 "rul": {"window_cycles": 30, "cap_cycles": 125, "test_rmse_cycles": 13.361126950231279},
+    2:                 "survival": {"initial_cycles": [1, 30], "support_since_landmark": self.cox_meta["maximum_supported_time_since_landmark"],
+    1:                              "limitations": LIMITATIONS, "hazard_ratios_per_training_sd": self.cox["model"].hazard_ratios_.to_dict()},
+    2:                 "anomaly": {"default_detector": self.anomaly_meta["selected_model"], "default_policy": self.anomaly_meta["primary_policy"],
+    1:                             "thresholds": self.anomaly_meta["thresholds"], "smoothing_cycles": 5, "consecutive_flags": 3,
+    1:                             "limitation": "Validation-selected autoencoder underperformed simpler baselines on test; anomaly scores are not probabilities."},
+    1:                 "explanation": {"method": "GradientExplainer", "samples": 500, "seed": 42, "background_version": self.background_version},
+    1:                 "limitations": ["FD001 research model, not validated for generic IoT or maintenance safety.", "No calibrated RUL interval or automated maintenance policy."]}

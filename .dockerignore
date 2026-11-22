@@ -1,0 +1,10 @@
+**
+!Dockerfile
+!pyproject.toml
+!requirements-serving.txt
+!requirements-streaming.txt
+!src/
+!src/predictive_maintenance/
+!src/predictive_maintenance/**
+**/__pycache__/
+**/*.pyc

@@ -1,0 +1,82 @@
+{
+  "method": "Python 3.11 stdlib trace; executable line coverage, not branch coverage",
+  "tests_run": 42,
+  "successful": true,
+  "files": [
+    {
+      "file": "src/predictive_maintenance/__init__.py",
+      "executable_lines": 1,
+      "covered_lines": 0,
+      "percent": 0.0
+    },
+    {
+      "file": "src/predictive_maintenance/anomaly.py",
+      "executable_lines": 115,
+      "covered_lines": 64,
+      "percent": 55.65
+    },
+    {
+      "file": "src/predictive_maintenance/api/__init__.py",
+      "executable_lines": 1,
+      "covered_lines": 0,
+      "percent": 0.0
+    },
+    {
+      "file": "src/predictive_maintenance/api/config.py",
+      "executable_lines": 25,
+      "covered_lines": 24,
+      "percent": 96.0
+    },
+    {
+      "file": "src/predictive_maintenance/api/errors.py",
+      "executable_lines": 28,
+      "covered_lines": 27,
+      "percent": 96.43
+    },
+    {
+      "file": "src/predictive_maintenance/api/main.py",
+      "executable_lines": 151,
+      "covered_lines": 149,
+      "percent": 98.68
+    },
+    {
+      "file": "src/predictive_maintenance/api/middleware.py",
+      "executable_lines": 124,
+      "covered_lines": 118,
+      "percent": 95.16
+    },
+    {
+      "file": "src/predictive_maintenance/api/registry.py",
+      "executable_lines": 158,
+      "covered_lines": 150,
+      "percent": 94.94
+    },
+    {
+      "file": "src/predictive_maintenance/api/schemas.py",
+      "executable_lines": 118,
+      "covered_lines": 117,
+      "percent": 99.15
+    },
+    {
+      "file": "src/predictive_maintenance/explanations.py",
+      "executable_lines": 31,
+      "covered_lines": 30,
+      "percent": 96.77
+    },
+    {
+      "file": "src/predictive_maintenance/rul.py",
+      "executable_lines": 20,
+      "covered_lines": 19,
+      "percent": 95.0
+    },
+    {
+      "file": "src/predictive_maintenance/survival.py",
+      "executable_lines": 35,
+      "covered_lines": 34,
+      "percent": 97.14
+    }
+  ],
+  "executable_lines": 807,
+  "covered_lines": 732,
+  "percent": 90.71
+}

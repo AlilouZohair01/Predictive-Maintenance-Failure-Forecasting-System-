@@ -1,0 +1,40 @@
+    1: """Conditional Breslow step-function survival, matching notebook 05."""
+    1: import numpy as np
+    1: import pandas as pd
+       
+    2: LIMITATIONS = ["Experimental Cox model: test concordance index 0.576.",
+    1:                "Covariates are frozen means of cycles 1–30; later sensor changes are not used."]
+       
+       
+    2: class UnsupportedAge(ValueError):
+    1:     pass
+       
+       
+    1: def conditional_survival(raw, current_cycle, horizon, bundle, metadata):
+    7:     landmark = metadata["landmark_cycle"]
+    7:     age = current_cycle - landmark
+    7:     support = int(metadata["maximum_supported_time_since_landmark"])
+    7:     if age > support:
+    1:         raise UnsupportedAge("Current age exceeds the fitted survival time support")
+    6:     features = metadata["features"]
+    6:     means = pd.DataFrame([np.asarray(raw).mean(axis=0)], columns=features)
+    6:     x = pd.DataFrame(bundle["scaler"].transform(means), columns=features)
+    6:     model = bundle["model"]
+    6:     risk = float(model.predict_partial_hazard(x).iloc[0])
+    6:     base = model.baseline_cumulative_hazard_.iloc[:, 0]
+    6:     times = np.r_[0.0, base.index.to_numpy(dtype=float)]
+    6:     hazards = np.r_[0.0, base.to_numpy(dtype=float)]
+   18:     evaluate = lambda t: hazards[np.searchsorted(times, t, side="right") - 1]
+    6:     evaluated = min(horizon, support - age)
+    6:     future = np.arange(evaluated + 1)
+    6:     survival = np.exp(-(evaluate(age + future) - evaluate(age)) * risk)
+    6:     if not np.isfinite(survival).all() or not np.isfinite(risk):
+    1:         raise ValueError("Invalid conditional survival result")
+    5:     crossing = np.flatnonzero(survival <= 0.5)
+   10:     return {"requested_horizon_cycles": horizon, "evaluated_horizon_cycles": evaluated,
+    5:             "horizon_truncated": evaluated < horizon,
+    5:             "failure_probability_at_requested_horizon": float(1 - survival[-1]) if evaluated == horizon else None,
+    5:             "median_remaining_cycles": int(future[crossing[0]]) if len(crossing) else None,
+    5:             "median_unavailable_reason": None if len(crossing) else "Survival does not reach 0.5 within the returned supported horizon.",
+  129:             "curve": [{"future_cycles": int(t), "survival_probability": float(s)} for t, s in zip(future, survival)],
+    5:             "limitations": LIMITATIONS}

@@ -1,0 +1,111 @@
+{
+  "unit_id": 55,
+  "dataset": "FD001",
+  "cycle": 113,
+  "model_version": "lstm_fd001_v2:6675179ff5ec",
+  "release_version": "270491b9619aa4a6",
+  "request_id": "1dfed06c-fc95-486e-9b68-d8fbe0b32f10",
+  "inference_duration_ms": 2355.5828000535257,
+  "predicted_rul_cycles": 120.25346606969833,
+  "base_value_cycles": 80.88554382324219,
+  "reconstructed_rul_cycles": 120.30792461850069,
+  "explanation_gap_cycles": -0.054458548802358564,
+  "sensor_contributions": [
+    {
+      "sensor": "s_20",
+      "contribution_cycles": 6.27575505313871,
+      "raw_window_mean": 38.96466666666667
+    },
+    {
+      "sensor": "s_11",
+      "contribution_cycles": 6.11515424134268,
+      "raw_window_mean": 47.370999999999995
+    },
+    {
+      "sensor": "s_12",
+      "contribution_cycles": 5.1817168096022215,
+      "raw_window_mean": 521.9713333333333
+    },
+    {
+      "sensor": "s_4",
+      "contribution_cycles": 4.42255517373269,
+      "raw_window_mean": 1404.541666666667
+    },
+    {
+      "sensor": "s_2",
+      "contribution_cycles": 3.704557946548448,
+      "raw_window_mean": 642.311
+    },
+    {
+      "sensor": "s_14",
+      "contribution_cycles": 3.3305010247204336,
+      "raw_window_mean": 8138.502666666665
+    },
+    {
+      "sensor": "s_13",
+      "contribution_cycles": 3.2917533681029454,
+      "raw_window_mean": 2388.063333333333
+    },
+    {
+      "sensor": "s_3",
+      "contribution_cycles": 3.1484561300203495,
+      "raw_window_mean": 1588.3380000000002
+    },
+    {
+      "sensor": "s_21",
+      "contribution_cycles": 2.372874728280294,
+      "raw_window_mean": 23.344749999999994
+    },
+    {
+      "sensor": "s_7",
+      "contribution_cycles": 1.7157430929728434,
+      "raw_window_mean": 553.9953333333332
+    },
+    {
+      "sensor": "s_8",
+      "contribution_cycles": -1.486804723754176,
+      "raw_window_mean": 2388.0583333333334
+    },
+    {
+      "sensor": "s_15",
+      "contribution_cycles": 1.3145445432201086,
+      "raw_window_mean": 8.420833333333333
+    },
+    {
+      "sensor": "s_17",
+      "contribution_cycles": 0.03557340733095771,
+      "raw_window_mean": 392.56666666666666
+    }
+  ],
+  "top_positive": [
+    {
+      "sensor": "s_20",
+      "contribution_cycles": 6.27575505313871,
+      "raw_window_mean": 38.96466666666667
+    },
+    {
+      "sensor": "s_11",
+      "contribution_cycles": 6.11515424134268,
+      "raw_window_mean": 47.370999999999995
+    },
+    {
+      "sensor": "s_12",
+      "contribution_cycles": 5.1817168096022215,
+      "raw_window_mean": 521.9713333333333
+    }
+  ],
+  "top_negative": [
+    {
+      "sensor": "s_8",
+      "contribution_cycles": -1.486804723754176,
+      "raw_window_mean": 2388.0583333333334
+    }
+  ],
+  "method": "shap.GradientExplainer",
+  "sample_budget": 500,
+  "seed": 42,
+  "background_version": "badca37c34903371",
+  "warnings": [
+    "Approximate explanation: the gap is not model prediction error."
+  ]
+}

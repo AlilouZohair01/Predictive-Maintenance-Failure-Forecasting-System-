@@ -1,0 +1,48 @@
+test_hysteresis_cooldown_and_unknown_state (test_streaming.PolicyTests.test_hysteresis_cooldown_and_unknown_state) ... ok
+test_policy_is_explicit_and_validated (test_streaming.PolicyTests.test_policy_is_explicit_and_validated) ... ok
+test_alert_lifecycle_no_duplicate_notifications (test_streaming.StoreTests.test_alert_lifecycle_no_duplicate_notifications) ... ok
+test_concurrent_duplicate_has_one_job (test_streaming.StoreTests.test_concurrent_duplicate_has_one_job) ... ok
+test_duplicate_conflict_gap_and_closed_run (test_streaming.StoreTests.test_duplicate_conflict_gap_and_closed_run) ... ok
+test_failed_job_blocks_only_its_engine_and_manual_retry (test_streaming.StoreTests.test_failed_job_blocks_only_its_engine_and_manual_retry) ... ok
+test_leases_preserve_unit_order_and_fence_old_worker (test_streaming.StoreTests.test_leases_preserve_unit_order_and_fence_old_worker) ... ok
+test_queue_and_history_limits (test_streaming.StoreTests.test_queue_and_history_limits) ... ok
+test_restart_run_identity_and_isolation (test_streaming.StoreTests.test_restart_run_identity_and_isolation) ... ok
+test_staleness_lag_and_pagination (test_streaming.StoreTests.test_staleness_lag_and_pagination) ... ok
+test_transaction_rolls_back_result_and_alerts (test_streaming.StoreTests.test_transaction_rolls_back_result_and_alerts) ... ok
+test_ingestion_feeds_auth_and_errors (test_streaming.StreamEndpointTests.test_ingestion_feeds_auth_and_errors) ... {"request_id": "78c73c59-6106-4381-9038-26052b115cf8", "method": "GET", "route": "/v1/stream/status", "status": 401, "elapsed_ms": 2.456, "release_version": null, "error_code": "UNAUTHORIZED"}
+{"request_id": "0ebf109c-64a1-40c6-9bd5-1380518766b6", "method": "POST", "route": "/v1/stream/runs", "status": 200, "elapsed_ms": 20.357, "release_version": null, "error_code": null}
+{"request_id": "e3fa11ab-0fa0-42ef-b434-bcff8c6828b7", "method": "POST", "route": "/v1/stream/runs/{run_id}/readings", "status": 202, "elapsed_ms": 15.001, "release_version": null, "error_code": null}
+{"request_id": "c72b2465-f6b5-428a-8ccb-4fbde08c7a00", "method": "GET", "route": "/v1/stream/runs/{run_id}", "status": 200, "elapsed_ms": 4.343, "release_version": null, "error_code": null}
+{"request_id": "febd0f51-3b33-45f0-b955-a9eb4d410a09", "method": "GET", "route": "/v1/stream/runs/{run_id}/units", "status": 200, "elapsed_ms": 4.785, "release_version": null, "error_code": null}
+{"request_id": "c3e0ab48-f3e5-4420-aa30-fdd0e1b758c9", "method": "GET", "route": "/v1/stream/runs/{run_id}/units/{unit_id}/latest", "status": 200, "elapsed_ms": 3.22, "release_version": null, "error_code": null}
+{"request_id": "3770745b-057c-45e0-aab0-4c37f4fd9da6", "method": "GET", "route": "/v1/stream/runs/{run_id}/units/{unit_id}/readings", "status": 200, "elapsed_ms": 4.099, "release_version": null, "error_code": null}
+{"request_id": "47a815f3-cfc0-477d-9865-b4ad07d9eae5", "method": "GET", "route": "/v1/stream/runs/{run_id}/units/{unit_id}/predictions", "status": 200, "elapsed_ms": 7.771, "release_version": null, "error_code": null}
+{"request_id": "d06e4037-bcfa-4c7d-8f1f-07b0319afc5b", "method": "GET", "route": "/v1/stream/runs/{run_id}/alerts", "status": 200, "elapsed_ms": 3.566, "release_version": null, "error_code": null}
+{"request_id": "bfe57d2d-9e3a-41c3-be3b-152e197ca837", "method": "GET", "route": "/v1/stream/runs/{run_id}/alert-events", "status": 200, "elapsed_ms": 3.174, "release_version": null, "error_code": null}
+{"request_id": "959ceaa4-441b-4345-baa2-afe34decd61c", "method": "GET", "route": "/v1/stream/runs", "status": 200, "elapsed_ms": 4.042, "release_version": null, "error_code": null}
+{"request_id": "d6f5fd0d-030e-4712-856a-233e6712f0d1", "method": "GET", "route": "/v1/stream/runs/{run_id}/units", "status": 422, "elapsed_ms": 1.19, "release_version": null, "error_code": "INVALID_REQUEST"}
+{"request_id": "fbbb0078-65ab-4ec6-9663-a36947d1cc41", "method": "POST", "route": "/v1/stream/runs/{run_id}/readings", "status": 422, "elapsed_ms": 0.708, "release_version": null, "error_code": "INVALID_REQUEST"}
+{"request_id": "ae1da1bb-9e75-4c4a-b1fa-a5bc62bb1f33", "method": "POST", "route": "/v1/stream/runs/{run_id}/readings", "status": 409, "elapsed_ms": 2.549, "release_version": null, "error_code": "READING_CONFLICT"}
+{"request_id": "351d6903-2584-4e33-9c86-94ef1a239e76", "method": "GET", "route": "/v1/stream/runs/{run_id}", "status": 404, "elapsed_ms": 3.0, "release_version": null, "error_code": "RUN_NOT_FOUND"}
+{"request_id": "be6cf63e-6981-4415-b799-0392ebe790a5", "method": "POST", "route": "/v1/stream/runs/{run_id}/units/{unit_id}/retry", "status": 200, "elapsed_ms": 4.469, "release_version": null, "error_code": null}
+{"request_id": "de7924c9-588e-4232-bee4-33b8c54aba50", "method": "POST", "route": "/v1/stream/runs/{run_id}/close", "status": 200, "elapsed_ms": 16.01, "release_version": null, "error_code": null}
+{"request_id": "fe5d529c-b6b5-4702-b6e5-457f49ba0a18", "method": "GET", "route": "/v1/stream/runs/{run_id}/units/{unit_id}/latest", "status": 200, "elapsed_ms": 4.139, "release_version": null, "error_code": null}
+ok
+test_bounded_retries (test_streaming.WorkerTests.test_bounded_retries) ... {"event": "inference_failed", "run_id": "test-run", "cycle": 30, "code": "INFERENCE_HTTP_503"}
+{"event": "inference_failed", "run_id": "test-run", "cycle": 30, "code": "INFERENCE_HTTP_503"}
+{"event": "inference_failed", "run_id": "test-run", "cycle": 30, "code": "INFERENCE_HTTP_503"}
+{"event": "inference_failed", "run_id": "test-run", "cycle": 30, "code": "INFERENCE_HTTP_503"}
+{"event": "inference_failed", "run_id": "test-run", "cycle": 30, "code": "INFERENCE_HTTP_503"}
+ok
+test_full_flow_warmup_no_future_leak_and_restart (test_streaming.WorkerTests.test_full_flow_warmup_no_future_leak_and_restart) ... ok
+test_permanent_auth_failure_and_database_mismatch (test_streaming.WorkerTests.test_permanent_auth_failure_and_database_mismatch) ... {"event": "inference_failed", "run_id": "test-run", "cycle": 30, "code": "INFERENCE_HTTP_401"}
+ok
+test_release_mismatch_blocks_without_mixing_versions (test_streaming.WorkerTests.test_release_mismatch_blocks_without_mixing_versions) ... {"event": "inference_failed", "run_id": "test-run", "cycle": 30, "code": "MODEL_RELEASE_CHANGED"}
+ok
+test_transient_failure_retry_does_not_advance_or_partially_commit (test_streaming.WorkerTests.test_transient_failure_retry_does_not_advance_or_partially_commit) ... {"event": "inference_failed", "run_id": "test-run", "cycle": 30, "code": "INFERENCE_HTTP_503"}
+ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 12.228s
+
+OK

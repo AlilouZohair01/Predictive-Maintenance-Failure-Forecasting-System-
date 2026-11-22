@@ -1,0 +1,145 @@
+    1: """Causal FD001 anomaly scoring. Failure labels never enter these functions."""
+    1: import numpy as np
+    1: import pandas as pd
+    1: from sklearn.metrics import precision_score, recall_score, f1_score, average_precision_score
+       
+    1: ALGORITHMS = ('isolation_forest', 'autoencoder', 'zscore')
+       
+       
+    1: def validate_frame(frame, sensors):
+   16:     frame = frame.sort_values(['unit_number', 'time_in_cycles']).reset_index(drop=True).copy()
+   16:     if frame.duplicated(['unit_number', 'time_in_cycles']).any():
+>>>>>>         raise ValueError('Duplicate engine/cycle observations')
+   16:     if not np.isfinite(frame[sensors].to_numpy()).all():
+>>>>>>         raise ValueError('Sensor values must be finite')
+   31:     for _, group in frame.groupby('unit_number'):
+   16:         if not np.all(np.diff(group.time_in_cycles) == 1):
+    1:             raise ValueError('Cycles must be consecutive within an engine')
+   15:     return frame
+       
+       
+    1: def windows(frame, scaled, length=30):
+   17:     values, endpoints = [], []
+   35:     for _, group in frame.groupby('unit_number', sort=False):
+   18:         idx = group.index.to_numpy()
+  642:         for end in range(length - 1, len(idx)):
+  624:             values.append(scaled[idx[end-length+1:end+1]].reshape(-1))
+  624:             endpoints.append(idx[end])
+   17:     width = length * scaled.shape[1]
+   17:     return np.asarray(values, dtype=np.float32).reshape(-1, width), np.asarray(endpoints, dtype=int)
+       
+       
+    1: def causal_mean(values, units, width):
+  138:     return pd.Series(values).groupby(np.asarray(units), sort=False).transform(
+  139:         lambda s: s.rolling(width, min_periods=1).mean()).to_numpy()
+       
+       
+    1: def sustained_flags(flags, units, count):
+           """Alert becomes true on the Nth consecutive flag; never backdate it."""
+   54:     return pd.Series(np.asarray(flags, dtype=int)).groupby(np.asarray(units), sort=False).transform(
+   56:         lambda s: s.rolling(count, min_periods=count).sum().eq(count)).to_numpy(dtype=bool)
+       
+       
+    1: def score_cycles(frame, sensors, scaler, forest, autoencoder, length=30, smoothing=5):
+   15:     frame = validate_frame(frame, sensors)
+   15:     scaled = scaler.transform(frame[sensors]).astype(np.float32)
+   15:     matrix, endpoints = windows(frame, scaled, length)
+   15:     result = frame[['unit_number', 'time_in_cycles']].copy()
+   15:     result['isolation_forest_raw'] = -forest.score_samples(scaled)
+   15:     result['zscore_raw'] = np.mean(scaled ** 2, axis=1)
+   15:     result['autoencoder_raw'] = np.nan
+   15:     if len(matrix):
+   13:         reconstruction = autoencoder.predict(matrix, batch_size=256, verbose=0)
+   13:         result.loc[endpoints, 'autoencoder_raw'] = np.mean((matrix - reconstruction) ** 2, axis=1)
+   60:     for name in ALGORITHMS:
+               # Same evaluation start for every detector. First 29 cycles are warm-up.
+   45:         valid = result.time_in_cycles >= length
+   45:         raw = result[f'{name}_raw'].where(valid)
+   45:         result[f'{name}_score'] = causal_mean(raw, result.unit_number, smoothing)
+   15:     return result
+       
+       
+    1: def apply_threshold(scores, name, threshold, consecutive=3):
+   17:     flag = (scores[f'{name}_score'] > threshold).to_numpy()
+   17:     alert = sustained_flags(flag, scores.unit_number, consecutive)
+   17:     return flag, alert
+       
+       
+    1: def evaluate(scores, rul, name, threshold, failure_window=30, consecutive=3):
+>>>>>>     flag, alert = apply_threshold(scores, name, threshold, consecutive)
+>>>>>>     valid = scores[f'{name}_score'].notna().to_numpy()
+>>>>>>     rul = np.asarray(rul)
+>>>>>>     y = rul <= failure_window
+>>>>>>     healthy = valid & (scores.time_in_cycles.to_numpy() <= 50)
+>>>>>>     distant = valid & (rul > 125)
+>>>>>>     rate = lambda pred, mask: float(np.mean(pred[mask])) if mask.any() else np.nan
+>>>>>>     return {
+>>>>>>         'n_cycles': int(valid.sum()), 'positive_cycles': int(y[valid].sum()),
+>>>>>>         'positive_prevalence': float(y[valid].mean()),
+>>>>>>         'average_precision': float(average_precision_score(y[valid], scores.loc[valid, f'{name}_score'])) if y[valid].any() else np.nan,
+>>>>>>         'cycle_precision': float(precision_score(y[valid], flag[valid], zero_division=0)),
+>>>>>>         'cycle_recall': float(recall_score(y[valid], flag[valid], zero_division=0)),
+>>>>>>         'cycle_f1': float(f1_score(y[valid], flag[valid], zero_division=0)),
+>>>>>>         'alert_precision': float(precision_score(y[valid], alert[valid], zero_division=0)),
+>>>>>>         'alert_recall': float(recall_score(y[valid], alert[valid], zero_division=0)),
+>>>>>>         'alert_f1': float(f1_score(y[valid], alert[valid], zero_division=0)),
+>>>>>>         'healthy_cycle_fpr': rate(flag, healthy), 'healthy_alert_fpr': rate(alert, healthy),
+>>>>>>         'rul_gt125_cycle_fpr': rate(flag, distant), 'rul_gt125_alert_fpr': rate(alert, distant),
+           }
+       
+       
+    1: def select_thresholds(validation_scores, validation_rul, name, consecutive=3):
+>>>>>>     series = validation_scores[f'{name}_score']
+>>>>>>     healthy = series[(validation_scores.time_in_cycles <= 50) & series.notna()]
+>>>>>>     if not len(healthy):
+>>>>>>         raise ValueError('No healthy validation scores')
+>>>>>>     primary = float(healthy.quantile(0.98))
+           # Fixed search budget, validation only. Optimize sustained-alert F1 for RUL <= 30.
+>>>>>>     candidates = np.unique(np.r_[np.nextafter(series.min(), -np.inf),
+>>>>>>                                  series.dropna().quantile(np.linspace(0, 1, 201)).to_numpy()])
+>>>>>>     trials = []
+>>>>>>     for threshold in candidates:
+>>>>>>         metrics = evaluate(validation_scores, validation_rul, name, threshold, 30, consecutive)
+>>>>>>         trials.append({'threshold': float(threshold), 'alert_f1': metrics['alert_f1'],
+>>>>>>                        'healthy_alert_fpr': metrics['healthy_alert_fpr']})
+>>>>>>     trials = pd.DataFrame(trials).sort_values(['alert_f1', 'healthy_alert_fpr', 'threshold'], ascending=[False, True, False])
+>>>>>>     return {'healthy_q98': primary, 'validation_f1': float(trials.iloc[0].threshold)}, trials
+       
+       
+    1: def lead_times(scores, rul, name, threshold, consecutive=3):
+    1:     _, alert = apply_threshold(scores, name, threshold, consecutive)
+    1:     table = scores[['unit_number', 'time_in_cycles']].copy()
+    1:     table['rul'] = np.asarray(rul)
+    1:     table['alert'] = alert
+    1:     rows = []
+    3:     for unit, group in table.groupby('unit_number'):
+    2:         hits = group[group.alert]
+    2:         first = hits.iloc[0] if len(hits) else None
+    4:         rows.append({'unit_number': unit, 'observed_alert': first is not None,
+    2:                      'first_alert_cycle': float(first.time_in_cycles) if first is not None else np.nan,
+    2:                      'lead_time_cycles': float(first.rul) if first is not None else np.nan,
+    2:                      'observed_failure_window': bool(group.rul.le(30).any())})
+    1:     return pd.DataFrame(rows)
+       
+       
+    1: def predict_saved(frame, model_dir):
+           """Score complete consecutive histories per engine; includes warm-up rows.
+       
+           Supply the full history when calling repeatedly so smoothing and alert state
+           are preserved. Scores are anomaly measures, not failure probabilities.
+           """
+>>>>>>     from pathlib import Path
+>>>>>>     import json
+>>>>>>     import joblib
+>>>>>>     import tensorflow as tf
+>>>>>>     model_dir = Path(model_dir)
+>>>>>>     config = json.loads((model_dir / 'metadata.json').read_text())
+>>>>>>     bundle = joblib.load(model_dir / 'detectors.pkl')
+>>>>>>     ae = tf.keras.models.load_model(model_dir / 'autoencoder.keras', compile=False)
+>>>>>>     scored = score_cycles(frame, config['sensors'], bundle['scaler'], bundle['forest'], ae,
+>>>>>>                           config['window_length'], config['smoothing'])
+>>>>>>     for name in ALGORITHMS:
+>>>>>>         flag, alert = apply_threshold(scored, name, config['thresholds'][name]['healthy_q98'], config['consecutive'])
+>>>>>>         scored[f'{name}_flag'] = flag
+>>>>>>         scored[f'{name}_alert'] = alert
+>>>>>>     return scored

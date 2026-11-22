@@ -1,0 +1,44 @@
+services:
+  api:
+    build: .
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - ./models:/models:ro
+      - stream_state:/state
+    environment:
+      PM_AUTH_MODE: ${PM_AUTH_MODE:-local}
+      PM_API_TOKEN: ${PM_API_TOKEN:-}
+      PM_ALLOWED_HOSTS: '["localhost","127.0.0.1","api"]'
+      PM_INFERENCE_CAPACITY: "2"
+    read_only: true
+    tmpfs:
+      - /tmp:size=256m,mode=1777
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    stop_grace_period: 155s
+  worker:
+    profiles: ["streaming"]
+    build: .
+    command: ["python", "-m", "predictive_maintenance.streaming.worker", "--api-url", "http://api:8000"]
+    depends_on:
+      api:
+        condition: service_healthy
+    volumes:
+      - stream_state:/state
+    environment:
+      PM_AUTH_MODE: ${PM_AUTH_MODE:-local}
+      PM_API_TOKEN: ${PM_API_TOKEN:-}
+    healthcheck:
+      disable: true
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+volumes:
+  stream_state:

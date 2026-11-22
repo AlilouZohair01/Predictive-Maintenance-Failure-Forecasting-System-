@@ -1,0 +1,7 @@
+model,policy,engines,engines_with_observed_alert,engines_without_observed_alert,median_lead_time_among_alerted,early_first_alerts_rul_gt125,engines_with_observed_failure_window,failure_window_alert_coverage
+autoencoder,healthy_q98,100,44,56,104.5,17,25,1.0
+autoencoder,validation_f1,100,34,66,63.0,9,25,0.88
+isolation_forest,healthy_q98,100,39,61,53.0,4,25,0.96
+isolation_forest,validation_f1,100,19,81,29.0,0,25,0.68
+zscore,healthy_q98,100,41,59,51.0,4,25,1.0
+zscore,validation_f1,100,18,82,28.5,0,25,0.68

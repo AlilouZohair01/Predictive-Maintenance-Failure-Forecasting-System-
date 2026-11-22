@@ -1,0 +1,225 @@
+{
+  "timestamp_utc": "2026-11-21T10:44:09.604995+00:00",
+  "transport": "Real localhost HTTP / Uvicorn",
+  "python": "3.11.15",
+  "os": "Windows-10-10.0.19045-SP0",
+  "processor": "Intel64 Family 6 Model 60 Stepping 3, GenuineIntel",
+  "physical_cpu_count": 4,
+  "logical_cpu_count": 8,
+  "total_ram_bytes": 17080406016,
+  "workers": 1,
+  "tf_intra_threads": 1,
+  "tf_inter_threads": 1,
+  "omp_threads": 1,
+  "inference_capacity": 2,
+  "explanation_capacity": 1,
+  "cache": "No response cache",
+  "release_version": "270491b9619aa4a6",
+  "cold_start_seconds": 21.033834300003946,
+  "first_request_latency_ms_after_startup_warmup": {
+    "predict": 295.5989000038244,
+    "survival": 14.126699999906123,
+    "anomaly": 253.14430001890287,
+    "explain": 2361.7955000372604
+  },
+  "history_rows": 113,
+  "shap_samples": 500,
+  "payload_bytes": {
+    "predict": 6598,
+    "survival": 6631,
+    "anomaly": 24720,
+    "explain": 6598
+  },
+  "memory_bytes": {
+    "after_ready": 519335936,
+    "after_load": 548868096,
+    "sampled_peak": 548921344
+  },
+  "short_soak": {
+    "duration_seconds": 30.106429399980698,
+    "requests": 99,
+    "errors": {}
+  },
+  "stages": [
+    {
+      "name": "predict_serial",
+      "routes": [
+        "predict"
+      ],
+      "requests": 30,
+      "concurrency": 1,
+      "duration_seconds": 9.977735899970867,
+      "status_counts": {
+        "200": 30
+      },
+      "throughput_requests_per_second": 3.0066941338954054,
+      "successful_requests_per_second": 3.0066941338954054,
+      "latency_ms_all": {
+        "p50": 320.37380000110716,
+        "p95": 410.839725023834,
+        "p99": 488.29430604004307
+      },
+      "latency_ms_success": {
+        "p50": 320.37380000110716,
+        "p95": 410.839725023834,
+        "p99": 488.29430604004307
+      }
+    },
+    {
+      "name": "survival_serial",
+      "routes": [
+        "survival"
+      ],
+      "requests": 30,
+      "concurrency": 1,
+      "duration_seconds": 0.31986139999935403,
+      "status_counts": {
+        "200": 30
+      },
+      "throughput_requests_per_second": 93.79062306380384,
+      "successful_requests_per_second": 93.79062306380384,
+      "latency_ms_all": {
+        "p50": 10.393200005637482,
+        "p95": 13.535569989471693,
+        "p99": 15.297643008525485
+      },
+      "latency_ms_success": {
+        "p50": 10.393200005637482,
+        "p95": 13.535569989471693,
+        "p99": 15.297643008525485
+      }
+    },
+    {
+      "name": "anomaly_serial",
+      "routes": [
+        "anomaly"
+      ],
+      "requests": 30,
+      "concurrency": 1,
+      "duration_seconds": 6.039073800027836,
+      "status_counts": {
+        "200": 30
+      },
+      "throughput_requests_per_second": 4.967649178233543,
+      "successful_requests_per_second": 4.967649178233543,
+      "latency_ms_all": {
+        "p50": 201.98584999889135,
+        "p95": 259.6539299731375,
+        "p99": 294.74859800538985
+      },
+      "latency_ms_success": {
+        "p50": 201.98584999889135,
+        "p95": 259.6539299731375,
+        "p99": 294.74859800538985
+      }
+    },
+    {
+      "name": "explain_serial",
+      "routes": [
+        "explain"
+      ],
+      "requests": 5,
+      "concurrency": 1,
+      "duration_seconds": 5.932021000015084,
+      "status_counts": {
+        "200": 5
+      },
+      "throughput_requests_per_second": 0.8428830578966741,
+      "successful_requests_per_second": 0.8428830578966741,
+      "latency_ms_all": {
+        "p50": 1220.4305999912322,
+        "p95": 1392.6473200204782,
+        "p99": 1418.106344032567
+      },
+      "latency_ms_success": {
+        "p50": 1220.4305999912322,
+        "p95": 1392.6473200204782,
+        "p99": 1418.106344032567
+      }
+    },
+    {
+      "name": "mixed_capacity",
+      "routes": [
+        "predict",
+        "survival",
+        "anomaly"
+      ],
+      "requests": 60,
+      "concurrency": 2,
+      "duration_seconds": 8.431948499986902,
+      "status_counts": {
+        "200": 60
+      },
+      "throughput_requests_per_second": 7.1157929866499074,
+      "successful_requests_per_second": 7.1157929866499074,
+      "latency_ms_all": {
+        "p50": 206.90260000992566,
+        "p95": 657.5617249618517,
+        "p99": 687.6743490062652
+      },
+      "latency_ms_success": {
+        "p50": 206.90260000992566,
+        "p95": 657.5617249618517,
+        "p99": 687.6743490062652
+      }
+    },
+    {
+      "name": "mixed_overload",
+      "routes": [
+        "predict",
+        "survival",
+        "anomaly"
+      ],
+      "requests": 60,
+      "concurrency": 4,
+      "duration_seconds": 0.8210576000274159,
+      "status_counts": {
+        "200": 5,
+        "503": 55
+      },
+      "throughput_requests_per_second": 73.07648086808592,
+      "successful_requests_per_second": 6.08970673900716,
+      "latency_ms_all": {
+        "p50": 10.392500000307336,
+        "p95": 42.63709497463367,
+        "p99": 647.4587640183738
+      },
+      "latency_ms_success": {
+        "p50": 233.93089999444783,
+        "p95": 732.3190200026147,
+        "p99": 767.1334839961492
+      }
+    },
+    {
+      "name": "explanation_overload",
+      "routes": [
+        "explain",
+        "predict"
+      ],
+      "requests": 10,
+      "concurrency": 4,
+      "duration_seconds": 1.5061203999794088,
+      "status_counts": {
+        "200": 3,
+        "503": 7
+      },
+      "throughput_requests_per_second": 6.639575428456262,
+      "successful_requests_per_second": 1.9918726285368786,
+      "latency_ms_all": {
+        "p50": 9.683850017609075,
+        "p95": 1210.8391899964765,
+        "p99": 1446.0890380083583
+      },
+      "latency_ms_success": {
+        "p50": 851.4296999783255,
+        "p95": 1439.5543200080283,
+        "p99": 1491.8320640106685
+      }
+    }
+  ],
+  "limitations": [
+    "One machine; small samples, especially SHAP, make p99 unstable.",
+    "Short bounded smoke soak, not a production endurance or security test.",
+    "Overload intentionally returns 503; accepted-work capacity is bounded."
+  ]
+}

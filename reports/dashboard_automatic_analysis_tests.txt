@@ -1,0 +1,7 @@
+C:\Users\Zohair\Desktop\Predictive maintenance for IoT\tests\test_dashboard.py:287: ResourceWarning: unclosed file <_io.BufferedReader name='C:\\Users\\Zohair\\Desktop\\Predictive maintenance for IoT\\src\\predictive_maintenance\\dashboard\\assets/style.css'>
+  self.assertEqual(client.get(route, auth=("tester", "test-password-123")).status_code, 200)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+----------------------------------------------------------------------
+Ran 25 tests in 30.530s
+
+OK

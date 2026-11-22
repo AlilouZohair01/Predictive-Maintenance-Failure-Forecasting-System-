@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "dataset": "FD001",
+  "sensors": [
+    "s_2",
+    "s_3",
+    "s_4",
+    "s_7",
+    "s_8",
+    "s_11",
+    "s_12",
+    "s_13",
+    "s_14",
+    "s_15",
+    "s_17",
+    "s_20",
+    "s_21"
+  ],
+  "capabilities": [
+    "predict",
+    "survival",
+    "anomaly",
+    "explain"
+  ],
+  "files": {
+    "lstm_fd001_v2/model.keras": "1e91699237e37b7ce1ea31e2f424779fd493acd3db6e00d5818fef5bb3ff9d0f",
+    "lstm_fd001_v2/scaler.pkl": "c88cecb00d637ca2a873e75b75129e9197783a332f06eef31f78a66b97114db3",
+    "lstm_fd001_v2/metadata.json": "6f70ee77259aa06a2d68d00a7b30ef6f473d7c1184794411efdbb02ac3f4b3f3",
+    "lstm_fd001_v2/shap_background.npy": "badca37c349033710b37e491e12c6a772fb2ee4d4292614668ed11aa1edaedc9",
+    "lstm_fd001_v2/shap_background.json": "3334747be246ddaa2ca0e0779e20284481f025452ed4d2d720e785a3eb260624",
+    "cox_fd001/cox_bundle.pkl": "3b32c8973bcae660bebcada2ffa0aef7d3022e2f735b67997699cbee89cd0245",
+    "cox_fd001/metadata.json": "96f6f831ad17b9621844608a2a70bc96ebe9913c9d81aa870da1096466a3d313",
+    "anomaly_fd001/detectors.pkl": "f475061a1457dcba070d92f8fa106a095cb913b7ed2fc1e21defbb004431c33f",
+    "anomaly_fd001/autoencoder.keras": "795d25a11acd4db4c7ee1d34a52c04cc45f8e543cd30e24a00bd0356f4af707f",
+    "anomaly_fd001/metadata.json": "a4eba1ec84212fc8c4f6b66e4614850dbf092250eb09520d906176c4f5e64c4e"
+  },
+  "versions": {
+    "tensorflow": "2.21.0",
+    "numpy": "2.4.3",
+    "pandas": "2.3.3",
+    "scipy": "1.17.1",
+    "scikit-learn": "1.8.0",
+    "lifelines": "0.30.3",
+    "shap": "0.51.0",
+    "joblib": "1.5.3"
+  },
+  "release_version": "270491b9619aa4a6"
+}

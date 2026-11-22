@@ -1,0 +1,6 @@
+{
+  "unit_id": 55,
+  "rul_cycles": 120.25346606969833,
+  "absolute_tolerance_cycles": 0.001,
+  "source": "Direct saved-model notebook computation; evaluation only, no model selection"
+}

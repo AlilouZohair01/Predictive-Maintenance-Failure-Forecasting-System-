@@ -1,0 +1,4 @@
+# Install after requirements-serving.txt and requirements-dashboard.txt; tests use unittest.
+httpx==0.28.1
+psutil==7.2.2
+# scripts/test_api_coverage.py uses standard-library line coverage.

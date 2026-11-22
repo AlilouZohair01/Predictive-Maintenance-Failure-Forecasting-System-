@@ -1,0 +1,13 @@
+test_alerts_discovery_and_selection (test_live_dashboard.LiveDashboardTests.test_alerts_discovery_and_selection) ... ok
+test_feed_pagination_auth_and_invalid_response (test_live_dashboard.LiveDashboardTests.test_feed_pagination_auth_and_invalid_response) ... ok
+test_freezes_processed_boundary_and_survival_age (test_live_dashboard.LiveDashboardTests.test_freezes_processed_boundary_and_survival_age) ... ok
+test_live_layout_pause_and_auth (test_live_dashboard.LiveDashboardTests.test_live_layout_pause_and_auth) ... ok
+test_old_release_rejected_for_shap (test_live_dashboard.LiveDashboardTests.test_old_release_rejected_for_shap) ... ok
+test_shap_is_explicit_pinned_and_export_uses_stream (test_live_dashboard.LiveDashboardTests.test_shap_is_explicit_pinned_and_export_uses_stream) ... ok
+test_stale_closed_blocked_and_api_failure_are_explicit (test_live_dashboard.LiveDashboardTests.test_stale_closed_blocked_and_api_failure_are_explicit) ... ok
+test_warmup_to_ready_auto_refresh_without_inference (test_live_dashboard.LiveDashboardTests.test_warmup_to_ready_auto_refresh_without_inference) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 27.744s
+
+OK

@@ -1,0 +1,24 @@
+    1: """LSTM serving transformations, independent of HTTP."""
+    1: import numpy as np
+    1: import pandas as pd
+       
+       
+    1: def scaled_window(raw, sensors, scaler):
+   11:     raw = np.asarray(raw, dtype=float)
+   11:     if raw.shape != (30, len(sensors)) or not np.isfinite(raw).all():
+    1:         raise ValueError("Expected a finite 30-cycle sensor window")
+   10:     scaled = scaler.transform(pd.DataFrame(raw, columns=sensors)).astype(np.float32)
+   10:     if not np.isfinite(scaled).all():
+    1:         raise ValueError("Non-finite scaled window")
+    9:     return scaled[np.newaxis]
+       
+       
+    1: def predict_rul(raw, sensors, scaler, model, cap=125.0):
+    8:     x = scaled_window(raw, sensors, scaler)
+    8:     prediction = np.asarray(model(x, training=False))
+    8:     if prediction.shape != (1, 1) or not np.isfinite(prediction).all():
+    2:         raise ValueError("Invalid model prediction")
+    6:     outside = ((np.asarray(raw) < scaler.data_min_) | (np.asarray(raw) > scaler.data_max_)).any()
+   12:     return {"rul_cycles": float(np.clip(prediction.item() * cap, 0, cap)),
+    6:             "rul_cap_cycles": cap,
+    6:             "warnings": ["Some readings are outside the training scaler range; they were not clipped."] if outside else []}

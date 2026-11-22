@@ -1,0 +1,190 @@
+    1: """Run: python -m uvicorn predictive_maintenance.api.main:create_app --factory."""
+    1: import asyncio
+    1: from concurrent.futures import ThreadPoolExecutor
+    1: from contextlib import asynccontextmanager
+    1: import hmac
+    1: import json
+    1: import logging
+    1: from pathlib import Path
+    1: import time
+       
+    1: from fastapi import Body, Depends, FastAPI, Request
+    1: from fastapi.middleware.cors import CORSMiddleware
+    1: from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+    1: from starlette.responses import PlainTextResponse
+       
+    1: from .config import Settings
+    1: from .errors import ServiceError, register_handlers
+    1: from .middleware import BoundaryMiddleware, Metrics
+    1: from .registry import Registry
+    1: from .schemas import (SENSORS, WindowRequest, SurvivalRequest, AnomalyRequest, ErrorResponse,
+                             PredictionResponse, SurvivalResponse, AnomalyResponse, ExplanationResponse)
+    1: from ..survival import UnsupportedAge
+       
+       
+    2: class WorkPool:
+    1:     """No waiting queue. Capacity remains occupied after HTTP cancellation/timeout."""
+    1:     def __init__(self, settings, metrics):
+   11:         self.settings, self.metrics = settings, metrics
+   11:         self.limits = {"inference": settings.inference_capacity, "explain": 1}
+   11:         self.active = {"inference": 0, "explain": 0}
+   44:         self.executors = {k: ThreadPoolExecutor(max_workers=n, thread_name_prefix="pm-" + k) for k, n in self.limits.items()}
+   11:         self.pending = set()
+   11:         self.accepting = True
+       
+    1:     async def run(self, operation, function):
+   28:         kind = "explain" if operation == "explain" else "inference"
+   28:         if not self.accepting or self.active[kind] >= self.limits[kind]:
+    2:             raise ServiceError(503, "CAPACITY_EXHAUSTED", "Service is busy; retry later.")
+               # Runs on the event loop: admission and counter increment have no await between them.
+   26:         self.active[kind] += 1
+   26:         loop = asyncio.get_running_loop()
+       
+   26:         def measured():
+   26:             start = time.perf_counter()
+   26:             value = function()
+   24:             return value, (time.perf_counter() - start) * 1000
+       
+   26:         start = time.perf_counter()
+   26:         future = loop.run_in_executor(self.executors[kind], measured)
+   26:         self.pending.add(future)
+       
+   26:         def completed(done):
+   26:             self.pending.discard(done)
+   26:             self.active[kind] -= 1
+   26:             self.metrics.inference_seconds[operation] += time.perf_counter() - start
+   26:             self.metrics.inference_count[operation] += 1
+   26:             if not done.cancelled():
+   26:                 done.exception()  # Observe exceptions even if the HTTP client has gone away.
+       
+   26:         future.add_done_callback(completed)
+   26:         try:
+   26:             return await asyncio.wait_for(asyncio.shield(future), self.settings.request_timeout_seconds)
+    4:         except TimeoutError:
+    1:             raise ServiceError(503, "INFERENCE_TIMEOUT", "Inference exceeded the response time limit; execution may still be draining.") from None
+       
+    1:     async def close(self):
+   11:         self.accepting = False
+   11:         if self.pending:
+    2:             _, pending = await asyncio.wait(self.pending, timeout=self.settings.shutdown_timeout_seconds)
+    2:             if pending:
+>>>>>>                 logging.getLogger("predictive_maintenance.api").warning("Native inference is still draining after shutdown grace period")
+   33:         for executor in self.executors.values():
+                   # Native calls cannot safely be killed in a thread; the process supervisor owns the hard deadline.
+   22:             executor.shutdown(wait=False, cancel_futures=True)
+       
+       
+    1: def example(name):
+   40:     path = Path(__file__).parent / "examples" / (name + ".json")
+   40:     return {"FD001_engine55": {"summary": "Real FD001 test engine 55 (raw sensors)", "value": json.loads(path.read_text(encoding="utf-8"))}} if path.exists() else {}
+       
+       
+    1: def create_app(settings=None, registry_factory=None):
+   10:     settings = settings or Settings()
+   10:     registry_factory = registry_factory or Registry
+   10:     metrics = Metrics()
+   10:     logger = logging.getLogger("predictive_maintenance.api")
+   10:     logger.setLevel(settings.log_level)
+   10:     if not logger.handlers:
+    1:         logger.addHandler(logging.StreamHandler())
+   10:     logger.propagate = False
+       
+   20:     @asynccontextmanager
+   20:     async def lifespan(app):
+   10:         app.state.ready = False
+               # Loading can take tens of seconds; startup fails closed on any artifact error.
+   10:         app.state.registry = await asyncio.to_thread(registry_factory, settings.model_root)
+    9:         app.state.pool = WorkPool(settings, metrics)
+    9:         app.state.ready = True
+    9:         try:
+    9:             yield
+               finally:
+    9:             app.state.ready = False
+    9:             await app.state.pool.close()
+       
+  130:     errors = {status: {"model": ErrorResponse} for status in (400, 401, 403, 404, 405, 408, 413, 422, 429, 500, 503)}
+   20:     app = FastAPI(title="FD001 Predictive Maintenance API", version=settings.app_version,
+   10:                   description="Stateless research inference. Raw C-MAPSS FD001 sensors only. Models are experimental; no maintenance safety certification.",
+   10:                   lifespan=lifespan, responses=errors)
+   10:     app.state.ready = False
+   10:     app.state.metrics = metrics
+   10:     register_handlers(app)
+   20:     app.add_middleware(CORSMiddleware, allow_origins=settings.cors_origins, allow_credentials=False,
+   10:                        allow_methods=["GET", "POST"], allow_headers=["Content-Type", "Authorization", "X-Request-ID"],
+   10:                        expose_headers=["X-Request-ID"])
+   10:     app.add_middleware(BoundaryMiddleware, settings=settings, metrics=metrics)
+       
+   10:     bearer = HTTPBearer(auto_error=False, description="Required in bearer mode. Local mode allows unauthenticated loopback use.")
+       
+   10:     async def authorize(request: Request, credentials: HTTPAuthorizationCredentials | None = Depends(bearer)):
+   33:         if settings.auth_mode == "bearer":
+    4:             supplied = request.headers.get("authorization", "")
+    4:             expected = "Bearer " + settings.api_token.get_secret_value()
+    4:             if not hmac.compare_digest(supplied.encode(), expected.encode()):
+    2:                 raise ServiceError(401, "UNAUTHORIZED", "A valid bearer token is required.")
+       
+   10:     def registry(request):
+   32:         if not request.app.state.ready:
+    1:             raise ServiceError(503, "NOT_READY", "Required models are unavailable.")
+   31:         value = request.app.state.registry
+   31:         request.state.release_version = value.release_version
+   31:         return value
+       
+   10:     async def inference(request, payload, operation, readings, call):
+   23:         reg = registry(request)
+19066:         raw = [[getattr(row, s) for s in SENSORS] for row in readings]
+   23:         try:
+   46:             result, duration = await app.state.pool.run(operation, lambda: call(reg, raw))
+    2:         except UnsupportedAge:
+    1:             raise ServiceError(422, "SURVIVAL_AGE_UNSUPPORTED", "Current cycle exceeds the fitted survival support.") from None
+   21:         cycle = payload.current_cycle if operation == "survival" else readings[-1].cycle
+   42:         return {**result, "unit_id": payload.unit_id, "dataset": payload.dataset, "cycle": cycle,
+   21:                 "request_id": request.state.request_id, "model_version": reg.model_version(operation),
+   21:                 "release_version": reg.release_version, "inference_duration_ms": duration}
+       
+   20:     @app.get("/health/live", tags=["Health"])
+   20:     async def live():
+    4:         return {"status": "alive"}
+       
+   20:     @app.get("/health/ready", tags=["Health"])
+   20:     async def ready(request: Request):
+    3:         reg = registry(request)
+    2:         return {"status": "ready", "release_version": reg.release_version, "capabilities": ["predict", "survival", "anomaly", "explain"]}
+       
+   20:     @app.get("/v1/models", dependencies=[Depends(authorize)], tags=["Models"])
+   20:     async def models(request: Request):
+    3:         return {**registry(request).describe(), "request_id": request.state.request_id, "api_version": settings.app_version}
+       
+   20:     @app.post("/v1/predict", response_model=PredictionResponse, dependencies=[Depends(authorize)], tags=["Inference"])
+   20:     async def predict(request: Request, payload: WindowRequest = Body(openapi_examples=example("predict"))):
+               """Predict capped remaining life at the last of exactly 30 consecutive cycles."""
+    8:         return await inference(request, payload, "predict", payload.window, lambda r, x: r.predict(x))
+       
+   20:     @app.post("/v1/survival", response_model=SurvivalResponse, dependencies=[Depends(authorize)], tags=["Inference"])
+   20:     async def survival(request: Request, payload: SurvivalRequest = Body(openapi_examples=example("survival"))):
+               """Use cycles 1–30 and condition on survival through current_cycle. Unsupported horizons are truncated, not extrapolated."""
+    8:         return await inference(request, payload, "survival", payload.initial_window,
+    8:                                lambda r, x: r.survival(x, payload.current_cycle, payload.horizon_cycles))
+       
+   20:     @app.post("/v1/anomaly", response_model=AnomalyResponse, dependencies=[Depends(authorize)], tags=["Inference"])
+   20:     async def anomaly(request: Request, payload: AnomalyRequest = Body(openapi_examples=example("anomaly"))):
+               """Full history from cycle 1. Score/flag unavailable before 30; sustained alert unavailable before 32. Scores are not probabilities."""
+   15:         if len(payload.history) > settings.max_history_rows:
+    1:             raise ServiceError(422, "HISTORY_TOO_LONG", "History exceeds the configured row limit.")
+   28:         result = await inference(request, payload, "anomaly", payload.history,
+   28:                                  lambda r, x: r.anomaly(x, payload.unit_id, payload.detector, payload.threshold_policy, payload.return_history))
+   14:         state = result["latest"]["is_anomaly"]
+   14:         metrics.anomaly_flags["warmup" if state is None else "flagged" if state else "normal"] += 1
+   14:         return result
+       
+   20:     @app.post("/v1/explain", response_model=ExplanationResponse, dependencies=[Depends(authorize)], tags=["Inference"])
+   20:     async def explanation(request: Request, payload: WindowRequest = Body(openapi_examples=example("explain"))):
+               """500-sample approximate GradientExplainer; signed time contributions sum to each sensor's contribution. One concurrent explanation per worker."""
+    2:         return await inference(request, payload, "explain", payload.window, lambda r, x: r.explain(x))
+       
+   20:     @app.get("/metrics", dependencies=[Depends(authorize)], response_class=PlainTextResponse, tags=["Operations"])
+   20:     async def prometheus(request: Request):
+    3:         registry(request)
+    3:         return PlainTextResponse(metrics.render(app.state.pool.active), media_type="text/plain; version=0.0.4")
+       
+   10:     return app

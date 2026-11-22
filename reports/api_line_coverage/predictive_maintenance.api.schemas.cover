@@ -1,0 +1,154 @@
+    1: """Strict public inputs; raw native sensor units, never normalized client values."""
+    1: from typing import Annotated, Literal
+    1: from pydantic import BaseModel, ConfigDict, Field, AwareDatetime, model_validator
+       
+   15: SENSORS = [f"s_{i}" for i in (2, 3, 4, 7, 8, 11, 12, 13, 14, 15, 17, 20, 21)]
+    1: Number = Annotated[float, Field(strict=True, allow_inf_nan=False)]
+    1: PositiveInt = Annotated[int, Field(strict=True, gt=0)]
+       
+       
+    2: class StrictModel(BaseModel):
+    1:     model_config = ConfigDict(extra="forbid", allow_inf_nan=False)
+       
+       
+    2: class SensorReading(StrictModel):
+    1:     cycle: PositiveInt
+    1:     s_2: Number
+    1:     s_3: Number
+    1:     s_4: Number
+    1:     s_7: Number
+    1:     s_8: Number
+    1:     s_11: Number
+    1:     s_12: Number
+    1:     s_13: Number
+    1:     s_14: Number
+    1:     s_15: Number
+    1:     s_17: Number
+    1:     s_20: Number
+    1:     s_21: Number
+    1:     timestamp: AwareDatetime | None = None
+       
+       
+    1: def consecutive(readings, start=None):
+ 1882:     cycles = [r.cycle for r in readings]
+   33:     if start is not None and cycles[0] != start:
+    2:         raise ValueError(f"History must start at cycle {start}")
+ 1619:     if any(b != a + 1 for a, b in zip(cycles, cycles[1:])):
+    3:         raise ValueError("Cycles must be ordered, unique and consecutive")
+       
+       
+    2: class EngineRequest(StrictModel):
+    1:     unit_id: PositiveInt
+    1:     dataset: Literal["FD001"] = "FD001"
+    1:     source: Annotated[str, Field(max_length=128)] | None = None
+       
+       
+    2: class WindowRequest(EngineRequest):
+    1:     window: list[SensorReading] = Field(min_length=30, max_length=30)
+       
+    2:     @model_validator(mode="after")
+    2:     def validate_window(self):
+   10:         consecutive(self.window)
+    7:         return self
+       
+       
+    2: class SurvivalRequest(EngineRequest):
+    1:     initial_window: list[SensorReading] = Field(min_length=30, max_length=30)
+    1:     current_cycle: Annotated[int, Field(strict=True, ge=30)]
+    1:     horizon_cycles: PositiveInt = 100
+       
+    2:     @model_validator(mode="after")
+    2:     def validate_window(self):
+    6:         consecutive(self.initial_window, start=1)
+    5:         return self
+       
+       
+    2: class AnomalyRequest(EngineRequest):
+    1:     history: list[SensorReading] = Field(min_length=1, max_length=1000)
+    1:     detector: Literal["autoencoder", "isolation_forest", "zscore"] = "autoencoder"
+    1:     threshold_policy: Literal["healthy_q98", "validation_f1"] = "healthy_q98"
+    1:     return_history: Annotated[bool, Field(strict=True)] = False
+       
+    2:     @model_validator(mode="after")
+    2:     def validate_history(self):
+   17:         consecutive(self.history, start=1)
+   16:         return self
+       
+       
+    2: class ResponseBase(StrictModel):
+    1:     unit_id: int
+    1:     dataset: Literal["FD001"] = "FD001"
+    1:     cycle: int
+    1:     model_version: str
+    1:     release_version: str
+    1:     request_id: str
+    1:     inference_duration_ms: Number
+       
+       
+    2: class PredictionResponse(ResponseBase):
+    1:     rul_cycles: Annotated[float, Field(ge=0, le=125)]
+    1:     rul_cap_cycles: float = 125.0
+    1:     warnings: list[str]
+       
+       
+    2: class SurvivalPoint(StrictModel):
+    1:     future_cycles: int
+    1:     survival_probability: Annotated[float, Field(ge=0, le=1)]
+       
+       
+    2: class SurvivalResponse(ResponseBase):
+    1:     requested_horizon_cycles: int
+    1:     evaluated_horizon_cycles: int
+    1:     horizon_truncated: bool
+    1:     failure_probability_at_requested_horizon: Annotated[float, Field(ge=0, le=1)] | None
+    1:     median_remaining_cycles: int | None
+    1:     median_unavailable_reason: str | None
+    1:     curve: list[SurvivalPoint]
+    1:     limitations: list[str]
+       
+       
+    2: class AnomalyPoint(StrictModel):
+    1:     cycle: int
+    1:     raw_score: Number | None
+    1:     anomaly_score: Number | None
+    1:     is_anomaly: bool | None
+    1:     sustained_alert: bool | None
+    1:     status: Literal["warmup", "ready"]
+    1:     alert_history_ready: bool
+    1:     smoothing_samples: int
+       
+       
+    2: class AnomalyResponse(ResponseBase):
+    1:     detector: str
+    1:     threshold_policy: str
+    1:     threshold: Number
+    1:     latest: AnomalyPoint
+    1:     history: list[AnomalyPoint] | None
+       
+       
+    2: class SensorContribution(StrictModel):
+    1:     sensor: str
+    1:     contribution_cycles: Number
+    1:     raw_window_mean: Number
+       
+       
+    2: class ExplanationResponse(ResponseBase):
+    1:     predicted_rul_cycles: Number
+    1:     base_value_cycles: Number
+    1:     reconstructed_rul_cycles: Number
+    1:     explanation_gap_cycles: Number
+    1:     sensor_contributions: list[SensorContribution]
+    1:     top_positive: list[SensorContribution]
+    1:     top_negative: list[SensorContribution]
+    1:     method: str
+    1:     sample_budget: int
+    1:     seed: int
+    1:     background_version: str
+    1:     warnings: list[str]
+       
+       
+    2: class ErrorResponse(StrictModel):
+    1:     error_code: str
+    1:     message: str
+    1:     details: list[dict] = []
+    1:     request_id: str

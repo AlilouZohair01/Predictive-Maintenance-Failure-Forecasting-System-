@@ -1,0 +1,293 @@
+test_gaps_are_rejected (test_anomaly.AnomalyTests.test_gaps_are_rejected) ... ok
+test_no_alert_is_missing_and_trigger_is_not_backdated (test_anomaly.AnomalyTests.test_no_alert_is_missing_and_trigger_is_not_backdated) ... ok
+test_smoothing_uses_only_past_and_resets_by_engine (test_anomaly.AnomalyTests.test_smoothing_uses_only_past_and_resets_by_engine) ... ok
+test_windows_stop_at_current_cycle_and_never_cross_engines (test_anomaly.AnomalyTests.test_windows_stop_at_current_cycle_and_never_cross_engines) ... ok
+test_auth_and_cors (test_api_endpoints.EndpointTests.test_auth_and_cors) ... {"request_id": "96589fc2-f781-404e-acc0-891fd589c9f7", "method": "GET", "route": "/health/live", "status": 200, "elapsed_ms": 3.264, "release_version": null, "error_code": null}
+{"request_id": "b87c10dc-0476-4ba1-b7bd-d8c5d6d90072", "method": "GET", "route": "/v1/models", "status": 401, "elapsed_ms": 1.105, "release_version": null, "error_code": "UNAUTHORIZED"}
+{"request_id": "7eaef4ac-5cb9-4da2-8da9-854d4f5df439", "method": "GET", "route": "/v1/models", "status": 200, "elapsed_ms": 0.626, "release_version": "test-release", "error_code": null}
+{"request_id": "d4ce4f65-7578-4dc3-91a8-785d7121263a", "method": "GET", "route": "/metrics", "status": 401, "elapsed_ms": 1.544, "release_version": null, "error_code": "UNAUTHORIZED"}
+{"request_id": "389d5571-8fc0-40f6-a39f-a966e8f031a2", "method": "GET", "route": "/metrics", "status": 200, "elapsed_ms": 3.673, "release_version": "test-release", "error_code": null}
+{"request_id": "c4d0fdbe-8413-4807-9bbe-bdf964eb9489", "method": "OPTIONS", "route": "unmatched", "status": 200, "elapsed_ms": 0.221, "release_version": null, "error_code": null}
+ok
+test_health_models_docs_metrics_and_ids (test_api_endpoints.EndpointTests.test_health_models_docs_metrics_and_ids) ... {"request_id": "example-123", "method": "GET", "route": "/health/live", "status": 200, "elapsed_ms": 1.604, "release_version": null, "error_code": null}
+{"request_id": "example-123", "method": "GET", "route": "/health/ready", "status": 200, "elapsed_ms": 1.032, "release_version": "test-release", "error_code": null}
+{"request_id": "example-123", "method": "GET", "route": "/v1/models", "status": 200, "elapsed_ms": 1.022, "release_version": "test-release", "error_code": null}
+{"request_id": "example-123", "method": "GET", "route": "unmatched", "status": 200, "elapsed_ms": 0.254, "release_version": null, "error_code": null}
+{"request_id": "example-123", "method": "GET", "route": "unmatched", "status": 200, "elapsed_ms": 0.199, "release_version": null, "error_code": null}
+{"request_id": "example-123", "method": "GET", "route": "unmatched", "status": 200, "elapsed_ms": 293.648, "release_version": null, "error_code": null}
+{"request_id": "example-123", "method": "GET", "route": "/metrics", "status": 200, "elapsed_ms": 4.976, "release_version": "test-release", "error_code": null}
+{"request_id": "0f3d9465-bcda-469a-90f5-db32bd79abdd", "method": "POST", "route": "/v1/predict", "status": 200, "elapsed_ms": 3.417, "release_version": "test-release", "error_code": null}
+{"request_id": "89defacf-1af3-4228-819e-0bd328c7e9ff", "method": "GET", "route": "/health/live", "status": 200, "elapsed_ms": 0.391, "release_version": null, "error_code": null}
+{"request_id": "a2d5146e-2315-4f33-9ffd-3b2024382811", "method": "GET", "route": "/metrics", "status": 200, "elapsed_ms": 2.265, "release_version": "test-release", "error_code": null}
+ok
+test_history_limit (test_api_endpoints.EndpointTests.test_history_limit) ... {"request_id": "972fba26-2f87-41e3-8df5-81f7e534edb2", "method": "POST", "route": "/v1/anomaly", "status": 422, "elapsed_ms": 6.704, "release_version": null, "error_code": "HISTORY_TOO_LONG"}
+ok
+test_host_size_and_readiness_failures (test_api_endpoints.EndpointTests.test_host_size_and_readiness_failures) ... {"request_id": "309b586e-c2cb-4f56-8cb6-e5c737505f8f", "method": "GET", "route": "unmatched", "status": 400, "elapsed_ms": 0.235, "release_version": null, "error_code": "INVALID_HOST"}
+{"request_id": "67bb5f78-27e6-49c2-915a-0b639ab5d454", "method": "POST", "route": "unmatched", "status": 413, "elapsed_ms": 0.195, "release_version": null, "error_code": "BODY_TOO_LARGE"}
+{"request_id": "d24aabd8-2a6a-483a-96e2-013f70bf8597", "method": "POST", "route": "unmatched", "status": 400, "elapsed_ms": 0.124, "release_version": null, "error_code": "INVALID_CONTENT_LENGTH"}
+{"request_id": "e7f50724-dce8-40a9-ae77-34e35d2e93ae", "method": "POST", "route": "unmatched", "status": 413, "elapsed_ms": 0.196, "release_version": null, "error_code": "BODY_TOO_LARGE"}
+{"request_id": "8523a331-2b87-4c83-8bdc-db4e09f08811", "method": "GET", "route": "/health/ready", "status": 503, "elapsed_ms": 1.03, "release_version": null, "error_code": "NOT_READY"}
+{"request_id": "2732fce5-e1c5-4e1d-96bc-b3e485bcd472", "method": "GET", "route": "/health/live", "status": 200, "elapsed_ms": 0.868, "release_version": null, "error_code": null}
+ok
+test_invalid_requests_use_scrubbed_envelope (test_api_endpoints.EndpointTests.test_invalid_requests_use_scrubbed_envelope) ... {"request_id": "6c119c05-3a5f-4d2c-bd0c-243c465b6eb6", "method": "POST", "route": "/v1/predict", "status": 422, "elapsed_ms": 3.336, "release_version": null, "error_code": "INVALID_REQUEST"}
+{"request_id": "a08bf0a4-a5ec-436c-a286-15cac4608105", "method": "POST", "route": "/v1/predict", "status": 422, "elapsed_ms": 0.502, "release_version": null, "error_code": "INVALID_REQUEST"}
+{"request_id": "f8605451-2b2b-471d-a74e-3809507be4bd", "method": "GET", "route": "unmatched", "status": 404, "elapsed_ms": 0.898, "release_version": null, "error_code": "NOT_FOUND"}
+{"request_id": "5b91e62b-37ae-4e68-be73-bfa244d4a65d", "method": "GET", "route": "/v1/predict", "status": 405, "elapsed_ms": 0.626, "release_version": null, "error_code": "METHOD_NOT_ALLOWED"}
+ok
+test_unexpected_error_and_invalid_output_are_generic (test_api_endpoints.EndpointTests.test_unexpected_error_and_invalid_output_are_generic) ... Request failed
+Traceback (most recent call last):
+  File "C:\Users\Zohair\Desktop\Predictive maintenance for IoT\src\predictive_maintenance\api\middleware.py", line 130, in __call__
+    await self.app(scope, replay, wrapped_send)
+  File "C:\Users\Zohair\anaconda3\envs\exam_env\Lib\site-packages\starlette\middleware\cors.py", line 88, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Zohair\anaconda3\envs\exam_env\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Zohair\anaconda3\envs\exam_env\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Zohair\anaconda3\envs\exam_env\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Zohair\anaconda3\envs\exam_env\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Zohair\anaconda3\envs\exam_env\Lib\site-packages\starlette\routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Zohair\anaconda3\envs\exam_env\Lib\site-packages\starlette\routing.py", line 680, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Zohair\anaconda3\envs\exam_env\Lib\site-packages\starlette\routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Zohair\anaconda3\envs\exam_env\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Zohair\anaconda3\envs\exam_env\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Zohair\anaconda3\envs\exam_env\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Zohair\anaconda3\envs\exam_env\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Zohair\anaconda3\envs\exam_env\Lib\site-packages\fastapi\routing.py", line 674, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Zohair\anaconda3\envs\exam_env\Lib\site-packages\fastapi\routing.py", line 328, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Zohair\Desktop\Predictive maintenance for IoT\src\predictive_maintenance\api\main.py", line 173, in predict
+    return await inference(request, payload, "predict", payload.window, lambda r, x: r.predict(x))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Zohair\Desktop\Predictive maintenance for IoT\src\predictive_maintenance\api\main.py", line 149, in inference
+    result, duration = await app.state.pool.run(operation, lambda: call(reg, raw))
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Zohair\Desktop\Predictive maintenance for IoT\src\predictive_maintenance\api\main.py", line 64, in run
+    return await asyncio.wait_for(asyncio.shield(future), self.settings.request_timeout_seconds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Zohair\anaconda3\envs\exam_env\Lib\asyncio\tasks.py", line 489, in wait_for
+    return fut.result()
+           ^^^^^^^^^^^^
+  File "C:\Users\Zohair\anaconda3\envs\exam_env\Lib\concurrent\futures\thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Zohair\Desktop\Predictive maintenance for IoT\src\predictive_maintenance\api\main.py", line 47, in measured
+    value = function()
+            ^^^^^^^^^^
+  File "C:\Users\Zohair\Desktop\Predictive maintenance for IoT\src\predictive_maintenance\api\main.py", line 149, in <lambda>
+    result, duration = await app.state.pool.run(operation, lambda: call(reg, raw))
+                                                                   ^^^^^^^^^^^^^^
+  File "C:\Users\Zohair\Desktop\Predictive maintenance for IoT\src\predictive_maintenance\api\main.py", line 173, in <lambda>
+    return await inference(request, payload, "predict", payload.window, lambda r, x: r.predict(x))
+                                                                                     ^^^^^^^^^^^^
+  File "C:\Users\Zohair\Desktop\Predictive maintenance for IoT\tests\test_api_endpoints.py", line 59, in broken
+    raise RuntimeError("private-model-path")
+RuntimeError: private-model-path
+{"request_id": "a97b839d-496c-4130-baa0-21b681612b2d", "method": "POST", "route": "/v1/predict", "status": 500, "elapsed_ms": 23.694, "release_version": "test-release", "error_code": "INTERNAL_ERROR"}
+Request failed
+Traceback (most recent call last):
+  File "C:\Users\Zohair\Desktop\Predictive maintenance for IoT\src\predictive_maintenance\api\middleware.py", line 130, in __call__
+    await self.app(scope, replay, wrapped_send)
+  File "C:\Users\Zohair\anaconda3\envs\exam_env\Lib\site-packages\starlette\middleware\cors.py", line 88, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Zohair\anaconda3\envs\exam_env\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Zohair\anaconda3\envs\exam_env\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Zohair\anaconda3\envs\exam_env\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Zohair\anaconda3\envs\exam_env\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Zohair\anaconda3\envs\exam_env\Lib\site-packages\starlette\routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Zohair\anaconda3\envs\exam_env\Lib\site-packages\starlette\routing.py", line 680, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Zohair\anaconda3\envs\exam_env\Lib\site-packages\starlette\routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Zohair\anaconda3\envs\exam_env\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Zohair\anaconda3\envs\exam_env\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Zohair\anaconda3\envs\exam_env\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Zohair\anaconda3\envs\exam_env\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Zohair\anaconda3\envs\exam_env\Lib\site-packages\fastapi\routing.py", line 695, in app
+    content = await serialize_response(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Zohair\anaconda3\envs\exam_env\Lib\site-packages\fastapi\routing.py", line 300, in serialize_response
+    raise ResponseValidationError(
+fastapi.exceptions.ResponseValidationError: 1 validation error:
+  {'type': 'finite_number', 'loc': ('response', 'rul_cycles'), 'msg': 'Input should be a finite number', 'input': nan}
+
+  File "C:\Users\Zohair\Desktop\Predictive maintenance for IoT\src\predictive_maintenance\api\main.py", line 170, in predict
+    POST /v1/predict
+{"request_id": "3a661892-f1a2-4dbb-9d0c-6d345cad51d1", "method": "POST", "route": "/v1/predict", "status": 500, "elapsed_ms": 8.296, "release_version": "test-release", "error_code": "INTERNAL_ERROR"}
+ok
+test_cancellation_does_not_release_capacity (test_api_endpoints.WorkPoolTests.test_cancellation_does_not_release_capacity) ... ok
+test_slow_body_is_bounded (test_api_endpoints.WorkPoolTests.test_slow_body_is_bounded) ... {"request_id": "55cb2cc8-3741-4e9f-a209-7ee95cec9f25", "method": "POST", "route": "unmatched", "status": 408, "elapsed_ms": 11.426, "release_version": null, "error_code": "BODY_TIMEOUT"}
+ok
+test_timeout_keeps_capacity_until_native_work_finishes (test_api_endpoints.WorkPoolTests.test_timeout_keeps_capacity_until_native_work_finishes) ... ok
+test_unlabelled_stream_size_bound (test_api_endpoints.WorkPoolTests.test_unlabelled_stream_size_bound) ... {"request_id": "b6032779-8239-4899-a015-d6f749de13cc", "method": "POST", "route": "unmatched", "status": 413, "elapsed_ms": 24.0, "release_version": null, "error_code": "BODY_TOO_LARGE"}
+ok
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1795353137.704427    7100 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1795353145.670137    7100 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1795353152.611147    7100 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING:tensorflow:TensorFlow GPU support is not available on native Windows for TensorFlow >= 2.11. Even if CUDA/cuDNN are installed, GPU will not be used. Please use WSL2 or the TensorFlow-DirectML plugin.
+C:\Users\Zohair\anaconda3\envs\exam_env\Lib\site-packages\keras\src\models\functional.py:241: UserWarning: The structure of `inputs` doesn't match the expected structure.
+Expected: input_layer_3
+Received: inputs=['Tensor(shape=(1, 30, 13))']
+  warnings.warn(msg)
+C:\Users\Zohair\anaconda3\envs\exam_env\Lib\site-packages\keras\src\models\functional.py:241: UserWarning: The structure of `inputs` doesn't match the expected structure.
+Expected: input_layer_3
+Received: inputs=['Tensor(shape=(2, 30, 13))']
+  warnings.warn(msg)
+test_all_detectors_match_notebook_and_warmup (test_api_inference.RealArtifactTests.test_all_detectors_match_notebook_and_warmup) ... {"request_id": "3baa46ce-34c2-4356-a41e-f07115717111", "method": "POST", "route": "/v1/anomaly", "status": 200, "elapsed_ms": 231.438, "release_version": "270491b9619aa4a6", "error_code": null}
+{"request_id": "92fe1d66-273c-4912-944d-6554bac23b7f", "method": "POST", "route": "/v1/anomaly", "status": 200, "elapsed_ms": 144.738, "release_version": "270491b9619aa4a6", "error_code": null}
+{"request_id": "c50296ef-e98d-4db4-b3be-0177d5a4175b", "method": "POST", "route": "/v1/anomaly", "status": 200, "elapsed_ms": 143.451, "release_version": "270491b9619aa4a6", "error_code": null}
+{"request_id": "8789f92d-9030-4fcd-8b07-4b2bdecde17e", "method": "POST", "route": "/v1/anomaly", "status": 200, "elapsed_ms": 137.396, "release_version": "270491b9619aa4a6", "error_code": null}
+{"request_id": "89d7df7f-3838-4391-bd74-175c36137467", "method": "POST", "route": "/v1/anomaly", "status": 200, "elapsed_ms": 146.736, "release_version": "270491b9619aa4a6", "error_code": null}
+{"request_id": "87663010-86f9-48db-823d-a2d8a5ac5d67", "method": "POST", "route": "/v1/anomaly", "status": 200, "elapsed_ms": 185.018, "release_version": "270491b9619aa4a6", "error_code": null}
+ok
+test_metadata_and_readiness (test_api_inference.RealArtifactTests.test_metadata_and_readiness) ... {"request_id": "b397d06b-1452-4636-968a-2a30119614ed", "method": "GET", "route": "/health/ready", "status": 200, "elapsed_ms": 2.045, "release_version": "270491b9619aa4a6", "error_code": null}
+{"request_id": "f4f92eeb-724d-42e4-b4c6-810338b396e8", "method": "GET", "route": "/v1/models", "status": 200, "elapsed_ms": 2.408, "release_version": "270491b9619aa4a6", "error_code": null}
+{"request_id": "4199bc0c-9889-48df-92bc-08aa1d73502a", "method": "GET", "route": "unmatched", "status": 200, "elapsed_ms": 282.979, "release_version": null, "error_code": null}
+ok
+test_prediction_matches_frozen_notebook_computation (test_api_inference.RealArtifactTests.test_prediction_matches_frozen_notebook_computation) ... {"request_id": "3cecdcc0-5962-4e49-8bf1-b6c23d0536d2", "method": "POST", "route": "/v1/predict", "status": 200, "elapsed_ms": 284.782, "release_version": "270491b9619aa4a6", "error_code": null}
+ok
+test_prefix_invariance_and_short_history (test_api_inference.RealArtifactTests.test_prefix_invariance_and_short_history) ... {"request_id": "f4b737a1-74ca-4f05-b42d-9d1202332662", "method": "POST", "route": "/v1/anomaly", "status": 200, "elapsed_ms": 210.812, "release_version": "270491b9619aa4a6", "error_code": null}
+{"request_id": "cc602030-f589-4ff3-aefc-f167046097e9", "method": "POST", "route": "/v1/anomaly", "status": 200, "elapsed_ms": 36.703, "release_version": "270491b9619aa4a6", "error_code": null}
+{"request_id": "01f3f673-241f-48fb-9069-245c25609a46", "method": "POST", "route": "/v1/anomaly", "status": 200, "elapsed_ms": 45.422, "release_version": "270491b9619aa4a6", "error_code": null}
+{"request_id": "75bf7014-69ed-41e5-9440-7bd233c593d4", "method": "POST", "route": "/v1/anomaly", "status": 200, "elapsed_ms": 135.758, "release_version": "270491b9619aa4a6", "error_code": null}
+{"request_id": "bcddf28e-af87-40cb-8a54-6a5856ede87c", "method": "POST", "route": "/v1/anomaly", "status": 200, "elapsed_ms": 182.818, "release_version": "270491b9619aa4a6", "error_code": null}
+{"request_id": "1e16603c-f378-45f8-82df-30366e063e54", "method": "POST", "route": "/v1/anomaly", "status": 200, "elapsed_ms": 196.668, "release_version": "270491b9619aa4a6", "error_code": null}
+{"request_id": "6cd393a0-4989-4799-9d5c-2123b4c056f4", "method": "POST", "route": "/v1/anomaly", "status": 200, "elapsed_ms": 471.914, "release_version": "270491b9619aa4a6", "error_code": null}
+{"request_id": "c4450363-7d18-45b3-adf8-5e36faf95c33", "method": "POST", "route": "/v1/anomaly", "status": 200, "elapsed_ms": 232.634, "release_version": "270491b9619aa4a6", "error_code": null}
+ok
+test_real_shap_explanation_accounting (test_api_inference.RealArtifactTests.test_real_shap_explanation_accounting) ... C:\Users\Zohair\anaconda3\envs\exam_env\Lib\site-packages\keras\src\models\functional.py:241: UserWarning: The structure of `inputs` doesn't match the expected structure.
+Expected: input_layer_3
+Received: inputs=['Tensor(shape=(1, 30, 13))']
+  warnings.warn(msg)
+C:\Users\Zohair\anaconda3\envs\exam_env\Lib\site-packages\keras\src\models\functional.py:241: UserWarning: The structure of `inputs` doesn't match the expected structure.
+Expected: input_layer_3
+Received: inputs=['Tensor(shape=(50, 30, 13))']
+  warnings.warn(msg)
+{"request_id": "13cd83b6-49be-4736-883d-62fd337edf40", "method": "POST", "route": "/v1/explain", "status": 200, "elapsed_ms": 2813.637, "release_version": "270491b9619aa4a6", "error_code": null}
+ok
+test_survival_matches_saved_notebook_curve (test_api_inference.RealArtifactTests.test_survival_matches_saved_notebook_curve) ... {"request_id": "656abe7e-6eb1-4bf9-824b-82f3765767cd", "method": "POST", "route": "/v1/survival", "status": 200, "elapsed_ms": 12.127, "release_version": "270491b9619aa4a6", "error_code": null}
+ok
+test_survival_support_boundaries (test_api_inference.RealArtifactTests.test_survival_support_boundaries) ... {"request_id": "f401b62a-205d-437d-89ee-9f52e82bdd83", "method": "POST", "route": "/v1/survival", "status": 200, "elapsed_ms": 10.482, "release_version": "270491b9619aa4a6", "error_code": null}
+{"request_id": "613c6026-0ad8-4ef4-a9ba-378b18f18f52", "method": "POST", "route": "/v1/survival", "status": 200, "elapsed_ms": 8.76, "release_version": "270491b9619aa4a6", "error_code": null}
+{"request_id": "ceacfa25-b1f8-45cd-8159-a1dbb9635589", "method": "POST", "route": "/v1/survival", "status": 422, "elapsed_ms": 1.747, "release_version": "270491b9619aa4a6", "error_code": "SURVIVAL_AGE_UNSUPPORTED"}
+ok
+test_breslow_steps_conditioning_and_median (test_api_inference.TransformationTests.test_breslow_steps_conditioning_and_median) ... ok
+test_rul_scaling_feature_order_and_invalid_output (test_api_inference.TransformationTests.test_rul_scaling_feature_order_and_invalid_output) ... ok
+test_shap_signed_sum_shape_and_gap (test_api_inference.TransformationTests.test_shap_signed_sum_shape_and_gap) ... ok
+test_strict_threshold_and_third_flag (test_api_inference.TransformationTests.test_strict_threshold_and_third_flag) ... ok
+test_anomaly_complete_history_and_choices (test_api_schemas.SchemaTests.test_anomaly_complete_history_and_choices) ... ok
+test_lengths_order_and_dataset (test_api_schemas.SchemaTests.test_lengths_order_and_dataset) ... ok
+test_secure_configuration (test_api_schemas.SchemaTests.test_secure_configuration) ... ok
+test_sensor_types_and_missing_extra (test_api_schemas.SchemaTests.test_sensor_types_and_missing_extra) ... ok
+test_survival_contract (test_api_schemas.SchemaTests.test_survival_contract) ... ok
+test_timestamp_timezone (test_api_schemas.SchemaTests.test_timestamp_timezone) ... ok
+test_valid_real_examples_and_new_unit_id (test_api_schemas.SchemaTests.test_valid_real_examples_and_new_unit_id) ... ok
+test_library_compatibility_is_checked (test_api_startup.StartupTests.test_library_compatibility_is_checked) ... ok
+test_manifest_and_artifact_corruption (test_api_startup.StartupTests.test_manifest_and_artifact_corruption) ... ok
+test_manifest_wrong_files_and_features (test_api_startup.StartupTests.test_manifest_wrong_files_and_features) ... ok
+test_metadata_contracts (test_api_startup.StartupTests.test_metadata_contracts) ... ok
+test_missing_manifest_fails_startup (test_api_startup.StartupTests.test_missing_manifest_fails_startup) ... ok
+test_scaler_order_and_width (test_api_startup.StartupTests.test_scaler_order_and_width) ... ok
+test_wrong_neural_model_shapes_fail_startup (test_api_startup.StartupTests.test_wrong_neural_model_shapes_fail_startup) ... ok
+test_analysis_inputs_never_include_future_observations (test_dashboard.DashboardServiceTests.test_analysis_inputs_never_include_future_observations) ... ok
+test_api_errors_and_invalid_output_are_safe (test_dashboard.DashboardServiceTests.test_api_errors_and_invalid_output_are_safe) ... ok
+test_cache_expiry_and_bound (test_dashboard.DashboardServiceTests.test_cache_expiry_and_bound) ... ok
+test_capacity_and_policy_labels (test_dashboard.DashboardServiceTests.test_capacity_and_policy_labels) ... ok
+test_dataset_prefix_and_invalid_selection (test_dashboard.DashboardServiceTests.test_dataset_prefix_and_invalid_selection) ... ok
+test_release_changes_do_not_mix_explanations (test_dashboard.DashboardServiceTests.test_release_changes_do_not_mix_explanations) ... ok
+test_survival_failure_preserves_other_models (test_dashboard.DashboardServiceTests.test_survival_failure_preserves_other_models) ... ok
+test_trend_is_bounded_and_explanation_preserves_context (test_dashboard.DashboardServiceTests.test_trend_is_bounded_and_explanation_preserves_context) ... ok
+test_warmup_does_not_request_inference (test_dashboard.DashboardServiceTests.test_warmup_does_not_request_inference) ... ok
+test_authentication_protects_callbacks_and_assets (test_dashboard.DashboardUITests.test_authentication_protects_callbacks_and_assets) ... C:\Users\Zohair\Desktop\Predictive maintenance for IoT\tests\test_dashboard.py:228: ResourceWarning: unclosed file <_io.BufferedReader name='C:\\Users\\Zohair\\Desktop\\Predictive maintenance for IoT\\src\\predictive_maintenance\\dashboard\\assets/style.css'>
+  self.assertEqual(client.get(route, auth=("tester", "test-password-123")).status_code, 200)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_callback_analysis_and_selection_clear (test_dashboard.DashboardUITests.test_callback_analysis_and_selection_clear) ... ok
+test_explanation_and_downloads (test_dashboard.DashboardUITests.test_explanation_and_downloads) ... ok
+test_layout_has_no_timer_or_secret (test_dashboard.DashboardUITests.test_layout_has_no_timer_or_secret) ... ok
+test_warmup_callback_and_session_isolation (test_dashboard.DashboardUITests.test_warmup_callback_and_session_isolation) ... ok
+test_alerts_discovery_and_selection (test_live_dashboard.LiveDashboardTests.test_alerts_discovery_and_selection) ... ok
+test_feed_pagination_auth_and_invalid_response (test_live_dashboard.LiveDashboardTests.test_feed_pagination_auth_and_invalid_response) ... ok
+test_freezes_processed_boundary_and_survival_age (test_live_dashboard.LiveDashboardTests.test_freezes_processed_boundary_and_survival_age) ... ok
+test_live_layout_pause_and_auth (test_live_dashboard.LiveDashboardTests.test_live_layout_pause_and_auth) ... ok
+test_old_release_rejected_for_shap (test_live_dashboard.LiveDashboardTests.test_old_release_rejected_for_shap) ... ok
+test_shap_is_explicit_pinned_and_export_uses_stream (test_live_dashboard.LiveDashboardTests.test_shap_is_explicit_pinned_and_export_uses_stream) ... ok
+test_stale_closed_blocked_and_api_failure_are_explicit (test_live_dashboard.LiveDashboardTests.test_stale_closed_blocked_and_api_failure_are_explicit) ... ok
+test_warmup_to_ready_auto_refresh_without_inference (test_live_dashboard.LiveDashboardTests.test_warmup_to_ready_auto_refresh_without_inference) ... ok
+test_current_artifacts_and_reference_files_exist (test_project_structure.ProjectStructureTests.test_current_artifacts_and_reference_files_exist) ... ok
+test_notebook_sources_compile_and_use_current_paths (test_project_structure.ProjectStructureTests.test_notebook_sources_compile_and_use_current_paths) ... ok
+test_project_paths_from_both_working_directories (test_project_structure.ProjectStructureTests.test_project_paths_from_both_working_directories) ... ok
+test_hysteresis_cooldown_and_unknown_state (test_streaming.PolicyTests.test_hysteresis_cooldown_and_unknown_state) ... ok
+test_policy_is_explicit_and_validated (test_streaming.PolicyTests.test_policy_is_explicit_and_validated) ... ok
+test_alert_lifecycle_no_duplicate_notifications (test_streaming.StoreTests.test_alert_lifecycle_no_duplicate_notifications) ... ok
+test_concurrent_duplicate_has_one_job (test_streaming.StoreTests.test_concurrent_duplicate_has_one_job) ... ok
+test_duplicate_conflict_gap_and_closed_run (test_streaming.StoreTests.test_duplicate_conflict_gap_and_closed_run) ... ok
+test_failed_job_blocks_only_its_engine_and_manual_retry (test_streaming.StoreTests.test_failed_job_blocks_only_its_engine_and_manual_retry) ... ok
+test_leases_preserve_unit_order_and_fence_old_worker (test_streaming.StoreTests.test_leases_preserve_unit_order_and_fence_old_worker) ... ok
+test_queue_and_history_limits (test_streaming.StoreTests.test_queue_and_history_limits) ... ok
+test_restart_run_identity_and_isolation (test_streaming.StoreTests.test_restart_run_identity_and_isolation) ... ok
+test_staleness_lag_and_pagination (test_streaming.StoreTests.test_staleness_lag_and_pagination) ... ok
+test_transaction_rolls_back_result_and_alerts (test_streaming.StoreTests.test_transaction_rolls_back_result_and_alerts) ... ok
+test_ingestion_feeds_auth_and_errors (test_streaming.StreamEndpointTests.test_ingestion_feeds_auth_and_errors) ... {"request_id": "cfe24f02-4e3b-4406-b28a-5c1139eb2f73", "method": "GET", "route": "/v1/stream/status", "status": 401, "elapsed_ms": 3.362, "release_version": null, "error_code": "UNAUTHORIZED"}
+{"request_id": "48151ba0-9ba5-4505-af54-b67df81629ac", "method": "POST", "route": "/v1/stream/runs", "status": 200, "elapsed_ms": 30.675, "release_version": null, "error_code": null}
+{"request_id": "79876ec6-ad17-4693-bf56-01a693005d35", "method": "POST", "route": "/v1/stream/runs/{run_id}/readings", "status": 202, "elapsed_ms": 21.284, "release_version": null, "error_code": null}
+{"request_id": "80e2c45f-429c-4e98-9a7c-c1a8f3ff3769", "method": "GET", "route": "/v1/stream/runs/{run_id}", "status": 200, "elapsed_ms": 9.146, "release_version": null, "error_code": null}
+{"request_id": "0e634956-0d45-4727-b3be-8be26b8dbe72", "method": "GET", "route": "/v1/stream/runs/{run_id}/units", "status": 200, "elapsed_ms": 10.067, "release_version": null, "error_code": null}
+{"request_id": "19c21206-34cf-4460-b062-8c0c36e11f8f", "method": "GET", "route": "/v1/stream/runs/{run_id}/units/{unit_id}/latest", "status": 200, "elapsed_ms": 7.013, "release_version": null, "error_code": null}
+{"request_id": "ed637a20-62a1-41a8-af20-4f13ee01beb0", "method": "GET", "route": "/v1/stream/runs/{run_id}/units/{unit_id}/readings", "status": 200, "elapsed_ms": 7.809, "release_version": null, "error_code": null}
+{"request_id": "38e57153-c4bc-4afe-a494-e6158126f041", "method": "GET", "route": "/v1/stream/runs/{run_id}/units/{unit_id}/predictions", "status": 200, "elapsed_ms": 6.78, "release_version": null, "error_code": null}
+{"request_id": "0135bd37-8c15-41a7-9528-806f22dc6ef8", "method": "GET", "route": "/v1/stream/runs/{run_id}/alerts", "status": 200, "elapsed_ms": 7.141, "release_version": null, "error_code": null}
+{"request_id": "48341540-3f34-4ef1-83d7-d8e88c7d023d", "method": "GET", "route": "/v1/stream/runs/{run_id}/alert-events", "status": 200, "elapsed_ms": 6.544, "release_version": null, "error_code": null}
+{"request_id": "cee6a01d-8f31-42e9-8ede-ebe5fdc5a0b9", "method": "GET", "route": "/v1/stream/runs", "status": 200, "elapsed_ms": 9.108, "release_version": null, "error_code": null}
+{"request_id": "ec3438bb-49f7-4033-90bf-120d15572d5c", "method": "GET", "route": "/v1/stream/runs/{run_id}/units", "status": 422, "elapsed_ms": 1.302, "release_version": null, "error_code": "INVALID_REQUEST"}
+{"request_id": "a6e43d48-71f8-408c-a12f-5b0ea329e517", "method": "POST", "route": "/v1/stream/runs/{run_id}/readings", "status": 422, "elapsed_ms": 1.353, "release_version": null, "error_code": "INVALID_REQUEST"}
+{"request_id": "a661a883-4b65-4db9-8e65-0f55ed42db6b", "method": "POST", "route": "/v1/stream/runs/{run_id}/readings", "status": 409, "elapsed_ms": 4.904, "release_version": null, "error_code": "READING_CONFLICT"}
+{"request_id": "68b5fde7-f324-4a2d-b389-60d84f770f37", "method": "GET", "route": "/v1/stream/runs/{run_id}", "status": 404, "elapsed_ms": 4.387, "release_version": null, "error_code": "RUN_NOT_FOUND"}
+{"request_id": "a622f1fa-4852-40ee-9ac8-2eeaa43a2c54", "method": "POST", "route": "/v1/stream/runs/{run_id}/units/{unit_id}/retry", "status": 200, "elapsed_ms": 5.663, "release_version": null, "error_code": null}
+{"request_id": "07724cbf-21bd-4bd8-aa6b-a39c40fb438d", "method": "POST", "route": "/v1/stream/runs/{run_id}/close", "status": 200, "elapsed_ms": 21.141, "release_version": null, "error_code": null}
+{"request_id": "6874041c-39bc-42ff-ba41-3b074670d18b", "method": "GET", "route": "/v1/stream/runs/{run_id}/units/{unit_id}/latest", "status": 200, "elapsed_ms": 6.012, "release_version": null, "error_code": null}
+ok
+test_bounded_retries (test_streaming.WorkerTests.test_bounded_retries) ... {"event": "inference_failed", "run_id": "test-run", "cycle": 30, "code": "INFERENCE_HTTP_503"}
+{"event": "inference_failed", "run_id": "test-run", "cycle": 30, "code": "INFERENCE_HTTP_503"}
+{"event": "inference_failed", "run_id": "test-run", "cycle": 30, "code": "INFERENCE_HTTP_503"}
+{"event": "inference_failed", "run_id": "test-run", "cycle": 30, "code": "INFERENCE_HTTP_503"}
+{"event": "inference_failed", "run_id": "test-run", "cycle": 30, "code": "INFERENCE_HTTP_503"}
+ok
+test_full_flow_warmup_no_future_leak_and_restart (test_streaming.WorkerTests.test_full_flow_warmup_no_future_leak_and_restart) ... ok
+test_permanent_auth_failure_and_database_mismatch (test_streaming.WorkerTests.test_permanent_auth_failure_and_database_mismatch) ... {"event": "inference_failed", "run_id": "test-run", "cycle": 30, "code": "INFERENCE_HTTP_401"}
+ok
+test_release_mismatch_blocks_without_mixing_versions (test_streaming.WorkerTests.test_release_mismatch_blocks_without_mixing_versions) ... {"event": "inference_failed", "run_id": "test-run", "cycle": 30, "code": "MODEL_RELEASE_CHANGED"}
+ok
+test_transient_failure_retry_does_not_advance_or_partially_commit (test_streaming.WorkerTests.test_transient_failure_retry_does_not_advance_or_partially_commit) ... {"event": "inference_failed", "run_id": "test-run", "cycle": 30, "code": "INFERENCE_HTTP_503"}
+ok
+
+----------------------------------------------------------------------
+Ran 81 tests in 74.480s
+
+OK

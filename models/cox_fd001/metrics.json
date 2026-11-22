@@ -1,0 +1,12 @@
+{
+  "training_c_index": 0.5540626999360204,
+  "validation_c_index": 0.6808510638297872,
+  "test_landmark_c_index": 0.5757267737344989,
+  "selected_penalizer": 10.0,
+  "brier_failure_within_10": 0.05278657559097291,
+  "n_supported_at_10": 100,
+  "brier_failure_within_20": 0.0990042804069819,
+  "n_supported_at_20": 100,
+  "brier_failure_within_50": 0.1642064299297814,
+  "n_supported_at_50": 100
+}

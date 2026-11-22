@@ -1,0 +1,25 @@
+{
+  "validated_at": "2026-11-22T13:11:04.102446+00:00",
+  "run_id": "live-check-a10af2a388",
+  "observed_dashboard_cycles": [
+    29,
+    29,
+    29,
+    30,
+    33,
+    37,
+    40,
+    40,
+    40,
+    40
+  ],
+  "final_progress": "completed",
+  "rul_cycles": 120.81341445446014,
+  "survival_cycle": 40,
+  "polling_triggered_inference": false,
+  "shap_requested_explicitly": true,
+  "png_pdf_exports": true,
+  "dashboard_restart_recovered_saved_run": true,
+  "elapsed_seconds": 46.520308800041676,
+  "verification": "Real HTTP API and saved models, actual replay/worker, Dash callback HTTP tests; not a browser visual test."
+}
